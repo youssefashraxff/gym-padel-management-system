@@ -6,21 +6,23 @@
 
 using json = nlohmann::json;
 
+using namespace std;
+
 template<typename T>
 class FileHandler {
     std::string readFile;
     std::string writeFile;
 
 public:
-    FileHandler(const std::string& readFile, const std::string& writeFile)
+    FileHandler(const string& readFile, const string& writeFile)
         : readFile(readFile), writeFile(writeFile) {}
 
-    std::vector<T> read() {
-        std::ifstream in(readFile);
-        std::vector<T> data;
+    vector<T> read() {
+        ifstream in(readFile);
+        vector<T> data;
 
         if (!in.is_open()) {
-            std::cerr << "Failed to open file: " << readFile << std::endl;
+            cerr << "Failed to open file: " << readFile << endl;
             return data;
         }
 
@@ -35,11 +37,11 @@ public:
         return data;
     }
 
-    void write(const std::vector<T>& data) {
-        std::ofstream out(writeFile);
+    void write(const vector<T>& data) {
+        ofstream out(writeFile);
 
         if (!out.is_open()) {
-            std::cerr << "Failed to open file: " << writeFile << std::endl;
+            cerr << "Failed to open file: " << writeFile << endl;
             return;
         }
 
