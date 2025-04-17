@@ -1,0 +1,77 @@
+[
+    {
+        "capacity": 20,
+        "coachName": "Alice Johnson",
+        "dayTime": "Monday 8AM",
+        "id": "C001",
+        "members": [
+            101,
+            102,
+            103,
+            104
+        ],
+        "type": "Yoga",
+        "waitlist": [
+            201,
+            202
+        ]
+    },
+    {
+        "capacity": 15,
+        "coachName": "Brian Lee",
+        "dayTime": "Tuesday 6PM",
+        "id": "C002",
+        "members": [
+            105,
+            106
+        ],
+        "type": "Pilates",
+        "waitlist": []
+    },
+    {
+        "capacity": 25,
+        "coachName": "Carmen Diaz",
+        "dayTime": "Wednesday 7PM",
+        "id": "C003",
+        "members": [
+            107,
+            108,
+            109,
+            110,
+            111
+        ],
+        "type": "Zumba",
+        "waitlist": [
+            203
+        ]
+    },
+    {
+        "capacity": 10,
+        "coachName": "David Smith",
+        "dayTime": "Thursday 5PM",
+        "id": "C004",
+        "members": [
+            112,
+            113,
+            114
+        ],
+        "type": "Strength Training",
+        "waitlist": [
+            204,
+            205
+        ]
+    },
+    {
+        "capacity": 18,
+        "coachName": "Emma Brown",
+        "dayTime": "Friday 6AM",
+        "id": "C005",
+        "members": [
+            115,
+            116,
+            117
+        ],
+        "type": "Cardio",
+        "waitlist": []
+    }
+]

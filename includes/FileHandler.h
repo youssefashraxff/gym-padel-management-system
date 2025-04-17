@@ -10,19 +10,18 @@ using namespace std;
 
 template<typename T>
 class FileHandler {
-    std::string readFile;
-    std::string writeFile;
+    std::string filePath;
 
 public:
-    FileHandler(const string& readFile, const string& writeFile)
-        : readFile(readFile), writeFile(writeFile) {}
+    FileHandler(const string& filePath)
+        : filePath(filePath) {}
 
     vector<T> read() {
-        ifstream in(readFile);
+        ifstream in(filePath);
         vector<T> data;
 
         if (!in.is_open()) {
-            cerr << "Failed to open file: " << readFile << endl;
+            cerr << "Failed to open file: " << filePath << endl;
             return data;
         }
 
@@ -38,10 +37,10 @@ public:
     }
 
     void write(const vector<T>& data) {
-        ofstream out(writeFile);
+        ofstream out(filePath);
 
         if (!out.is_open()) {
-            cerr << "Failed to open file: " << writeFile << endl;
+            cerr << "Failed to open file: " << filePath << endl;
             return;
         }
 

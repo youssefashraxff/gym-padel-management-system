@@ -1,0 +1,65 @@
+[
+    {
+        "id": "CT001",
+        "location": "Main Hall",
+        "timeSlots": {
+            "08:00": true,
+            "09:00": false,
+            "10:00": true
+        }
+    },
+    {
+        "id": "CT002",
+        "location": "East Wing",
+        "timeSlots": {
+            "08:00": false,
+            "09:00": true,
+            "10:00": false
+        }
+    },
+    {
+        "id": "CT003",
+        "location": "West Court",
+        "timeSlots": {
+            "08:00": true,
+            "09:00": true,
+            "10:00": false
+        }
+    },
+    {
+        "id": "CT004",
+        "location": "North Dome",
+        "timeSlots": {
+            "08:00": false,
+            "09:00": false,
+            "10:00": true
+        }
+    },
+    {
+        "id": "CT005",
+        "location": "South Arena",
+        "timeSlots": {
+            "08:00": true,
+            "09:00": false,
+            "10:00": true
+        }
+    },
+    {
+        "id": "CT006",
+        "location": "Outdoor Field A",
+        "timeSlots": {
+            "08:00": true,
+            "09:00": true,
+            "10:00": true
+        }
+    },
+    {
+        "id": "CT007",
+        "location": "Outdoor Field B",
+        "timeSlots": {
+            "08:00": false,
+            "09:00": true,
+            "10:00": false
+        }
+    }
+]

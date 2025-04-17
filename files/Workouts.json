@@ -1,0 +1,32 @@
+[
+    {
+        "activity": "Cardio",
+        "date": "2025-04-15",
+        "duration": "30 mins",
+        "memberID": 101
+    },
+    {
+        "activity": "Weightlifting",
+        "date": "2025-04-16",
+        "duration": "45 mins",
+        "memberID": 102
+    },
+    {
+        "activity": "Yoga",
+        "date": "2025-04-17",
+        "duration": "60 mins",
+        "memberID": 103
+    },
+    {
+        "activity": "Swimming",
+        "date": "2025-04-14",
+        "duration": "50 mins",
+        "memberID": 104
+    },
+    {
+        "activity": "HIIT",
+        "date": "2025-04-13",
+        "duration": "40 mins",
+        "memberID": 105
+    }
+]

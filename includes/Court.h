@@ -15,3 +15,17 @@ public:
     string location;
     map<string, bool> timeSlots;
 };
+
+void to_json(json& j, const Court& c) {
+    j = json{
+        {"id", c.id},
+        {"location", c.location},
+        {"timeSlots", c.timeSlots}
+    };
+}
+
+void from_json(const json& j, Court& c) {
+    j.at("id").get_to(c.id);
+    j.at("location").get_to(c.location);
+    j.at("timeSlots").get_to(c.timeSlots);
+}
