@@ -3,6 +3,9 @@
 #include <chrono>
 #include <iomanip>
 #include <sstream>
+
+#include "Workout.h"
+#include "CourtBooking.h"
 #include "json.hpp"
 
 using json = nlohmann::json;
@@ -24,6 +27,8 @@ public:
     string id;
     time_t dateOfBirth;
     Subscription subscription;
+    vector<Workout> workouts;
+    vector<CourtBooking> courtBookings;
 };
 
 std::string time_t_to_string(const time_t& t) {
