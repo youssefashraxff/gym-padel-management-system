@@ -18,8 +18,8 @@ time_t string_to_time_t(const std::string& str) {
     return std::mktime(&tm);
 }
 
-vector<int> queue_to_vector(queue<int> q) {
-    vector<int> v;
+vector<string> queue_to_vector(queue<string> q) {
+    vector<string> v;
     while (!q.empty()) {
         v.push_back(q.front());
         q.pop();
@@ -27,9 +27,9 @@ vector<int> queue_to_vector(queue<int> q) {
     return v;
 }
 
-queue<int> vector_to_queue(const vector<int>& v) {
-    queue<int> q;
-    for (int id : v) {
+queue<string> vector_to_queue(const vector<string>& v) {
+    queue<string> q;
+    for (string id : v) {
         q.push(id);
     }
     return q;

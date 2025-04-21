@@ -46,7 +46,7 @@ int main() {
     }
 
     for (const auto& c : classes) {
-        cout << c.coachName << " - " << c.waitlist.front() << endl;
+        cout << c.coachName << " - " << endl;
     }
 
     courtBookingHandler.write(courtBookings);

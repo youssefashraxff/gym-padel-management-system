@@ -1,77 +1,75 @@
 [
     {
-        "capacity": 20,
-        "coachName": "Alice Johnson",
-        "dayTime": "Monday 8AM",
+        "capacity": 10,
+        "coachName": "Amina Saleh",
+        "dayTime": "Monday 9AM",
         "id": "C001",
         "members": [
-            101,
-            102,
-            103,
-            104
+            "M001",
+            "M002",
+            "M003"
         ],
         "type": "Yoga",
         "waitlist": [
-            201,
-            202
+            "M010",
+            "M011"
         ]
     },
     {
-        "capacity": 15,
-        "coachName": "Brian Lee",
-        "dayTime": "Tuesday 6PM",
+        "capacity": 8,
+        "coachName": "Omar Khaled",
+        "dayTime": "Tuesday 11AM",
         "id": "C002",
         "members": [
-            105,
-            106
+            "M004",
+            "M005"
         ],
         "type": "Pilates",
         "waitlist": []
     },
     {
-        "capacity": 25,
-        "coachName": "Carmen Diaz",
-        "dayTime": "Wednesday 7PM",
+        "capacity": 12,
+        "coachName": "Lina Mahmoud",
+        "dayTime": "Wednesday 5PM",
         "id": "C003",
         "members": [
-            107,
-            108,
-            109,
-            110,
-            111
+            "M006",
+            "M007",
+            "M008",
+            "M009"
         ],
-        "type": "Zumba",
+        "type": "Spinning",
         "waitlist": [
-            203
+            "M012"
         ]
     },
     {
-        "capacity": 10,
-        "coachName": "David Smith",
-        "dayTime": "Thursday 5PM",
+        "capacity": 15,
+        "coachName": "Ahmed Nassar",
+        "dayTime": "Thursday 6PM",
         "id": "C004",
-        "members": [
-            112,
-            113,
-            114
-        ],
-        "type": "Strength Training",
-        "waitlist": [
-            204,
-            205
-        ]
+        "members": [],
+        "type": "Zumba",
+        "waitlist": []
     },
     {
-        "capacity": 18,
-        "coachName": "Emma Brown",
-        "dayTime": "Friday 6AM",
+        "capacity": 6,
+        "coachName": "Sara Adel",
+        "dayTime": "Friday 8AM",
         "id": "C005",
         "members": [
-            115,
-            116,
-            117
+            "M013",
+            "M014",
+            "M015",
+            "M016",
+            "M017",
+            "M018"
         ],
-        "type": "Cardio",
-        "waitlist": []
+        "type": "HIIT",
+        "waitlist": [
+            "M019",
+            "M020",
+            "M021"
+        ]
     }
 ]

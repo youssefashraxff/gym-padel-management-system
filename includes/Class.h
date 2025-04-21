@@ -17,11 +17,26 @@ public:
     string id;
     string coachName;
     int capacity;
-    vector<int> members;
+    vector<string> members;
     string dayTime;
-    queue<int> waitlist;
+    queue<string> waitlist;
 };
 
+void addMember(Member member, Class c) {
+    if (c.members.size() < c.capacity) {
+        c.members.push_back(member.id);
+    }
+}
+
+void removeMember(Member member, Class c) {
+    c.members.erase(remove(c.members.begin(), c.members.end(), member.id), c.members.end());
+}
+
+void addToWaitlist(Member member, Class c) {
+    if (c.members.size() >= c.capacity) {
+        c.waitlist.push(member.id);
+    }
+}
 
 void to_json(json& j, const Class& c) {
     j = json{
@@ -43,7 +58,7 @@ void from_json(const json& j, Class& c) {
     j.at("members").get_to(c.members);
     j.at("dayTime").get_to(c.dayTime);
 
-    vector<int> waitlistVec;
+    vector<string> waitlistVec;
     j.at("waitlist").get_to(waitlistVec);
     c.waitlist = vector_to_queue(waitlistVec);
 }
