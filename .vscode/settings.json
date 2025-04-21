@@ -1,6 +1,9 @@
 {
-    "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
-    "files.associations": {
-        "sstream": "cpp"
-    }
+  "C_Cpp.default.compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
+  "files.associations": {
+    "sstream": "cpp",
+    "map": "cpp",
+    "format": "cpp"
+  },
+  "C_Cpp_Runner.msvcBatchPath": "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Auxiliary/Build/vcvarsall.bat"
 }
