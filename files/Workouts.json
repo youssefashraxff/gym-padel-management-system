@@ -1,32 +1,32 @@
 [
     {
+        "activity": "Weightlifting",
+        "date": "2025-03-30",
+        "duration": "63 mins",
+        "memberID": 1
+    },
+    {
         "activity": "Cardio",
-        "date": "2025-04-15",
-        "duration": "30 mins",
-        "memberID": 101
+        "date": "2025-04-03",
+        "duration": "34 mins",
+        "memberID": 2
     },
     {
         "activity": "Weightlifting",
-        "date": "2025-04-16",
-        "duration": "45 mins",
-        "memberID": 102
+        "date": "2025-04-04",
+        "duration": "67 mins",
+        "memberID": 3
     },
     {
-        "activity": "Yoga",
-        "date": "2025-04-17",
-        "duration": "60 mins",
-        "memberID": 103
+        "activity": "Cardio",
+        "date": "2025-03-30",
+        "duration": "58 mins",
+        "memberID": 4
     },
     {
-        "activity": "Swimming",
-        "date": "2025-04-14",
-        "duration": "50 mins",
-        "memberID": 104
-    },
-    {
-        "activity": "HIIT",
-        "date": "2025-04-13",
-        "duration": "40 mins",
-        "memberID": 105
+        "activity": "Cardio",
+        "date": "2025-04-06",
+        "duration": "90 mins",
+        "memberID": 5
     }
 ]
