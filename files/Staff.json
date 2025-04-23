@@ -1,27 +1,27 @@
 [
     {
         "id": "S001",
-        "name": "John Doe",
-        "role": "Manager"
+        "name": "Staff 1",
+        "role": "Coach"
     },
     {
         "id": "S002",
-        "name": "Jane Smith",
-        "role": "Trainer"
+        "name": "Staff 2",
+        "role": "Receptionist"
     },
     {
         "id": "S003",
-        "name": "Emily Davis",
+        "name": "Staff 3",
         "role": "Receptionist"
     },
     {
         "id": "S004",
-        "name": "Michael Brown",
-        "role": "Coach"
+        "name": "Staff 4",
+        "role": "Cleaner"
     },
     {
         "id": "S005",
-        "name": "Sarah Wilson",
-        "role": "Administrator"
+        "name": "Staff 5",
+        "role": "Receptionist"
     }
 ]

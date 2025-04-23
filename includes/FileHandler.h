@@ -1,3 +1,8 @@
+
+
+#ifndef FILEHANDLER_H
+#define FILEHANDLER_H
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -10,7 +15,7 @@ using namespace std;
 
 template<typename T>
 class FileHandler {
-    std::string filePath;
+    string filePath;
 
 public:
     FileHandler(const string& filePath)
@@ -49,3 +54,5 @@ public:
         out.close();
     }
 };
+
+#endif
