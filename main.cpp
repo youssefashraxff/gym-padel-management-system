@@ -7,6 +7,7 @@
 #include "includes/Staff.h"
 #include "includes/Workout.h"
 #include "includes/Utils.h"
+#include "includes/User.h"
 
 using namespace std;
 
@@ -17,6 +18,7 @@ int main() {
     FileHandler<Workout> workoutHandler("files/Workouts.json");
     FileHandler<Court> courtHandler("files/Courts.json");
     FileHandler<Class> classHandler("files/Classes.json");
+    FileHandler<User> userHandler("files/User.json");
 
     vector<CourtBooking> courtBookings = courtBookingHandler.read();
     vector<Member> members = memberHandler.read();
@@ -24,6 +26,7 @@ int main() {
     vector<Workout> workouts = workoutHandler.read();
     vector<Court> courts = courtHandler.read();
     vector<Class> classes = classHandler.read();
+    vector<User> users = userHandler.read();
 
     for (const auto& c : courtBookings) {
         cout << c.courtID << " - " << time_t_to_string(c.date) << endl;
@@ -48,13 +51,13 @@ int main() {
     for (const auto& c : classes) {
         cout << c.coachName << " - " << c.waitlist.front() << endl;
     }
-
+    
     courtBookingHandler.write(courtBookings);
     memberHandler.write(members);
     staffHandler.write(staff);
     workoutHandler.write(workouts);
     courtHandler.write(courts);
     classHandler.write(classes);
-    
+    userHandler.write(users);
     return 0;
 }

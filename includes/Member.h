@@ -1,9 +1,11 @@
+#pragma once
 #include <iostream>
 #include <string>
 #include <chrono>
 #include <iomanip>
 #include <sstream>
-
+#include <vector>
+#include "User.h"
 #include "Workout.h"
 #include "CourtBooking.h"
 #include "Utils.h"
@@ -21,8 +23,7 @@ struct Subscription {
     bool active;
 };
 
-
-class Member {
+class Member : public User {
 public:
     string name;
     string id;
@@ -30,7 +31,19 @@ public:
     Subscription subscription;
     vector<Workout> workouts;
     vector<CourtBooking> courtBookings;
+
+private:  
+    string generateRandomId() {
+        stringstream idStream;
+        idStream << "M" << (rand() % 100000);
+        return idStream.str();
+    }
+
+public:
+    Member(string u, string p, string n, time_t dob)
+        : User(u, p), name(n), dateOfBirth(dob), id(generateRandomId()) {}
 };
+
 
 void to_json(json& j, const Subscription& sub) {
     j = json{
@@ -45,7 +58,7 @@ void to_json(json& j, const Subscription& sub) {
 void from_json(const json& j, Subscription& sub) {
     j.at("period").get_to(sub.period);
     j.at("price").get_to(sub.price);
-    std::string startStr, endStr;
+    string startStr, endStr;
     j.at("startDate").get_to(startStr);
     j.at("endDate").get_to(endStr);
     sub.startDate = string_to_time_t(startStr);
@@ -65,7 +78,7 @@ void to_json(json& j, const Member& m) {
 void from_json(const json& j, Member& m) {
     j.at("name").get_to(m.name);
     j.at("id").get_to(m.id);
-    std::string dobStr;
+    string dobStr;
     j.at("dateOfBirth").get_to(dobStr);
     m.dateOfBirth = string_to_time_t(dobStr);
     j.at("subscription").get_to(m.subscription);
