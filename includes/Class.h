@@ -20,21 +20,22 @@ public:
     vector<string> members;
     string dayTime;
     queue<string> waitlist;
+
+    void addMember(string memberID) {
+        if (members.size() < capacity) {
+            members.push_back(memberID);
+        }
+    }
+    
+    void removeMember(string memberID) {
+        members.erase(remove(members.begin(), members.end(), memberID), members.end());
+    }
+    
+    void addToWaitlist(string memberID) {
+        if (members.size() >= capacity) {
+            waitlist.push(memberID);
+        }
+    }
 };
 
-// void addMember(Member member, Class c) {
-//     if (c.members.size() < c.capacity) {
-//         c.members.push_back(member.id);
-//     }
-// }
-
-// void removeMember(Member member, Class c) {
-//     c.members.erase(remove(c.members.begin(), c.members.end(), member.id), c.members.end());
-// }
-
-// void addToWaitlist(Member member, Class c) {
-//     if (c.members.size() >= c.capacity) {
-//         c.waitlist.push(member.id);
-//     }
-// }
 #endif
