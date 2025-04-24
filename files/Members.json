@@ -1,62 +1,44 @@
-[
+﻿[
     {
+        "age": 20,
         "courtBookingIds": [
             1
         ],
-        "dateOfBirth": "2006-10-08",
         "id": "M001",
         "name": "Youssef Ashraf",
+        "password": "123123123",
         "subscriptionId": 101,
+        "username": "youssef123",
         "workoutIds": [
             1
         ]
     },
     {
+        "age": 20,
         "courtBookingIds": [
             2
         ],
-        "dateOfBirth": "2010-06-20",
         "id": "M002",
         "name": "Ali Nasr",
+        "password": "ali123123",
         "subscriptionId": 102,
+        "username": "alinasr123",
         "workoutIds": [
             2
         ]
     },
     {
+        "age": 20,
         "courtBookingIds": [
             3
         ],
-        "dateOfBirth": "2002-04-10",
         "id": "M003",
         "name": "Karim Fady",
+        "password": "karim010",
         "subscriptionId": 103,
+        "username": "karimfadyy",
         "workoutIds": [
             3
-        ]
-    },
-    {
-        "courtBookingIds": [
-            4
-        ],
-        "dateOfBirth": "2018-02-27",
-        "id": "M004",
-        "name": "Toqa El Morshedy",
-        "subscriptionId": 104,
-        "workoutIds": [
-            4
-        ]
-    },
-    {
-        "courtBookingIds": [
-            5
-        ],
-        "dateOfBirth": "2015-10-29",
-        "id": "M005",
-        "name": "Tia Mohammed",
-        "subscriptionId": 105,
-        "workoutIds": [
-            5
         ]
     }
 ]

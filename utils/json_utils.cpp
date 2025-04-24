@@ -1,22 +1,11 @@
 #include <iostream>
 
 #include "json_utils.h"
-// #include "includes/Member.h"
-// #include "includes/Staff.h"
-// #include "includes/Workout.h"
-// #include "includes/Class.h"
-// #include "includes/Court.h"
-// #include "includes/CourtBooking.h"
-// #include "includes/json.hpp"
 
-#include <sstream>
-#include <iomanip>
-
-#include <vector>
-#include <queue>
 
 using namespace std;
 using json = nlohmann::json;
+
 
 //Subscription
 
@@ -46,22 +35,24 @@ void from_json(const json& j, Subscription& sub) {
 //Member
 
 void to_json(json& j, const Member& m) {
-    j = json{
-        {"name", m.name},
+    j = {
         {"id", m.id},
-        {"dateOfBirth", time_t_to_string(m.dateOfBirth)},
+        {"name", m.name},
+        {"username", m.username},
+        {"password", m.password},
+        {"age", m.Age},
         {"subscriptionId", m.subscriptionId},
-        {"workoutIds" , m.workoutIds},
-        {"courtBookingIds" , m.courtBookingIds}
+        {"courtBookingIds", m.courtBookingIds},
+        {"workoutIds", m.workoutIds}
     };
 }
 
 void from_json(const json& j, Member& m) {
     j.at("name").get_to(m.name);
+    j.at("username").get_to(m.username);
+    j.at("password").get_to(m.password);
     j.at("id").get_to(m.id);
-    std::string dobStr;
-    j.at("dateOfBirth").get_to(dobStr);
-    m.dateOfBirth = string_to_time_t(dobStr);
+    j.at("age").get_to(m.Age);
     j.at("subscriptionId").get_to(m.subscriptionId);
     j.at("workoutIds").get_to(m.workoutIds);
     j.at("courtBookingIds").get_to(m.courtBookingIds);
@@ -71,6 +62,8 @@ void from_json(const json& j, Member& m) {
 
 void to_json(json& j, const Staff& s) {
     j = json{
+        {"username" , s.username},
+        {"password" , s.password},
         {"name", s.name},
         {"id", s.id},
         {"role", s.role}
@@ -78,6 +71,8 @@ void to_json(json& j, const Staff& s) {
 }
 
 void from_json(const json& j, Staff& s) {
+    s.username = j.at("username").get<string>();
+    s.password= j.at("password").get<string>();
     s.name = j.at("name").get<string>();
     s.id = j.at("id").get<string>();
     s.role = j.at("role").get<string>();
@@ -165,3 +160,21 @@ void from_json(const json& j, Workout& w) {
     w.date = string_to_time_t(j.at("date").get<string>());
 }
 
+// User
+
+// void to_json(json& j, const User& u) {
+//     j = json{
+//         {"username", u.getUsername()},
+//         {"password", u.getPassword()}
+//     };
+// }
+
+// //WRITE INTO FILES
+// void from_json(const json& j, User& u) {
+//     string username, pass;
+//     j.at("username").get_to(username);
+//     j.at("password").get_to(pass);
+
+//     u.setUsername(username);
+//     u.setPassword(pass);
+// }
