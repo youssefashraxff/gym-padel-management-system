@@ -4,12 +4,13 @@
 #include <iostream>
 #include <string>
 
+
 using namespace std;
 
-class Staff {
+class Staff{
 public:
-    // string email;
-    // string password;
+    string username;
+    string password;
     string name;
     string id;
     string role;

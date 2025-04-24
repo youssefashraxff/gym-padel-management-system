@@ -1,27 +1,37 @@
 [
     {
         "id": "S001",
-        "name": "Staff 1",
-        "role": "Coach"
+        "name": "Youssef",
+        "password": "pass123",
+        "role": "Coach",
+        "username": "staff_1"
     },
     {
         "id": "S002",
-        "name": "Staff 2",
-        "role": "Receptionist"
+        "name": "Karim",
+        "password": "pass234",
+        "role": "Receptionist",
+        "username": "staff_2"
     },
     {
         "id": "S003",
-        "name": "Staff 3",
-        "role": "Receptionist"
+        "name": "Nour",
+        "password": "pass345",
+        "role": "Receptionist",
+        "username": "staff_3"
     },
     {
         "id": "S004",
-        "name": "Staff 4",
-        "role": "Cleaner"
+        "name": "Ali",
+        "password": "pass456",
+        "role": "Cleaner",
+        "username": "staff_4"
     },
     {
         "id": "S005",
-        "name": "Staff 5",
-        "role": "Receptionist"
+        "name": "Toqa",
+        "password": "pass567",
+        "role": "Receptionist",
+        "username": "staff_5"
     }
 ]

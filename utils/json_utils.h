@@ -16,6 +16,7 @@ using nlohmann::json;
 #include "../includes/Class.h"
 #include "../includes/Court.h"
 #include "../includes/CourtBooking.h"
+#include "../includes/User.h"
 
 
 #include <sstream>
@@ -23,6 +24,8 @@ using nlohmann::json;
 
 #include <vector>
 #include <queue>
+
+string cleanUTF8(const string& str);
 
 // Member & Subscription
 void to_json(json& j, const Subscription& sub);
@@ -51,6 +54,10 @@ void from_json(const json& j, CourtBooking& c);
 void to_json(json& j, const Workout& w);
 void from_json(const json& j, Workout& w);
 
+//user
+
+// void to_json(json& j, const Member& m);
+// void from_json(const json& j, Member& m) ;
 
 
 string time_t_to_string(const time_t& t);

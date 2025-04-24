@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include "json.hpp"
+// #include "json_utils.h"
 
 using json = nlohmann::json; 
 
@@ -41,16 +42,31 @@ public:
         return data;
     }
 
-    void write(const vector<T>& data) {
-        ofstream out(filePath);
-
+    void write(const std::vector<T>& data) {
+        std::ofstream out(filePath);
         if (!out.is_open()) {
-            cerr << "Failed to open file: " << filePath << endl;
+            std::cerr << "Failed to open file: " << filePath << std::endl;
             return;
         }
-
-        json j = data;
-        out << j.dump(4);
+    
+        nlohmann::json j_array = nlohmann::json::array();
+        for (const auto& item : data) {
+            try {
+                nlohmann::json j_item;
+                to_json(j_item, item); // call to_json explicitly
+                j_array.push_back(j_item);
+            } catch (...) {
+                // Optional: skip on error
+            }
+        }
+    
+        try {
+            out << j_array.dump(4); // write safely
+        } catch (...) {
+            // Optional: handle write error
+        }
+        
+        std::cout << "[WRITE] Writing " << data.size() << " members to: " << filePath << std::endl;
         out.close();
     }
 };
