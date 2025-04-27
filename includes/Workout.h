@@ -10,7 +10,8 @@ using namespace std;
 
 class Workout {
 public:
-    int memberID;
+    int workoutID;
+    string memberID;
     string activity;
     string duration;
     time_t date;

@@ -1,44 +1,26 @@
-﻿[
+[
     {
         "age": 20,
-        "courtBookingIds": [
-            1
-        ],
         "id": "M001",
         "name": "Youssef Ashraf",
         "password": "123123123",
         "subscriptionId": 101,
-        "username": "youssef123",
-        "workoutIds": [
-            1
-        ]
+        "username": "youssef123"
     },
     {
         "age": 20,
-        "courtBookingIds": [
-            2
-        ],
         "id": "M002",
         "name": "Ali Nasr",
         "password": "ali123123",
         "subscriptionId": 102,
-        "username": "alinasr123",
-        "workoutIds": [
-            2
-        ]
+        "username": "alinasr123"
     },
     {
         "age": 20,
-        "courtBookingIds": [
-            3
-        ],
         "id": "M003",
         "name": "Karim Fady",
         "password": "karim010",
         "subscriptionId": 103,
-        "username": "karimfadyy",
-        "workoutIds": [
-            3
-        ]
+        "username": "karimfadyy"
     }
 ]

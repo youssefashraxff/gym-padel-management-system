@@ -41,9 +41,7 @@ void to_json(json& j, const Member& m) {
         {"username", m.username},
         {"password", m.password},
         {"age", m.Age},
-        {"subscriptionId", m.subscriptionId},
-        {"courtBookingIds", m.courtBookingIds},
-        {"workoutIds", m.workoutIds}
+        {"subscriptionId", m.subscriptionId}
     };
 }
 
@@ -54,8 +52,6 @@ void from_json(const json& j, Member& m) {
     j.at("id").get_to(m.id);
     j.at("age").get_to(m.Age);
     j.at("subscriptionId").get_to(m.subscriptionId);
-    j.at("workoutIds").get_to(m.workoutIds);
-    j.at("courtBookingIds").get_to(m.courtBookingIds);
 }
 
 //Staff
@@ -145,6 +141,7 @@ void from_json(const json& j, CourtBooking& c) {
 
 void to_json(json& j, const Workout& w) {
     j = json{
+        {"workoutID",w.workoutID},
         {"memberID", w.memberID},
         {"activity", w.activity},
         {"duration", w.duration},
@@ -154,6 +151,7 @@ void to_json(json& j, const Workout& w) {
 
 
 void from_json(const json& j, Workout& w) {
+    j.at("workoutID").get_to(w.workoutID);
     j.at("memberID").get_to(w.memberID);
     j.at("activity").get_to(w.activity);
     j.at("duration").get_to(w.duration);
