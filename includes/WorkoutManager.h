@@ -32,6 +32,7 @@ public:
         return memberWorkouts[memberID];
     }
     void addWorkout(string memberID,Workout w){
+        w.memberID=memberID;
         memberWorkouts[memberID].push(w);
         data_manager.workouts.push_back(w);
     }

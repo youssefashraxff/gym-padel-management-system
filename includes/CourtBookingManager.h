@@ -33,7 +33,9 @@ public:
         return memberCourtBookings[memberID];
     }
     void addBooking(string memberID,CourtBooking c){
+        c.memberID=memberID;
         memberCourtBookings[memberID].push(c);
+        data_manager.courtBookings.push_back(c);
     }
 
 
