@@ -12,7 +12,6 @@ using nlohmann::json;
 // Include custom class headers relative to this file's location
 #include "../includes/Member.h"
 #include "../includes/Staff.h"
-#include "../includes/Workout.h"
 #include "../includes/Class.h"
 #include "../includes/Court.h"
 #include "../includes/CourtBooking.h"
@@ -50,9 +49,6 @@ void from_json(const json& j, Court& c);
 void to_json(json& j, const CourtBooking& c);
 void from_json(const json& j, CourtBooking& c);
 
-// Workout
-void to_json(json& j, const Workout& w);
-void from_json(const json& j, Workout& w);
 
 //user
 
