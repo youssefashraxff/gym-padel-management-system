@@ -21,6 +21,7 @@ public:
     int capacity;
     string dayTime;
 
+
     queue<string> waitlist;
     unordered_set<string> memberIDs;
 
@@ -48,4 +49,5 @@ public:
         return memberIDs;
     }
 };
+
 #endif
