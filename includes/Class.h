@@ -1,5 +1,3 @@
-
-
 #ifndef CLASS_H
 #define CLASS_H
 
@@ -7,6 +5,10 @@
 #include <string>
 #include <queue>
 #include <vector>
+#include <unordered_map>
+
+#include "Member.h"
+#include <unordered_set>
 
 // #include "Member.h"
 using namespace std;
@@ -17,24 +19,33 @@ public:
     string id;
     string coachName;
     int capacity;
-    vector<string> members;
     string dayTime;
+
     queue<string> waitlist;
+    unordered_set<string> memberIDs;
+
+public:
+    bool addMember(string memberID) {
+        if (memberIDs.size() < capacity) {
+            memberIDs.insert(memberID);
+            cout << "Booking confirmed for " << memberID << ".\n";
+            return true;
+        } else {
+            waitlist.push(memberID);
+            cout << "Class is full. " << memberID << " added to waitlist.\n";
+            return false;
+        }
+    }
+    void removeMember(string memberID) {
+        if (memberIDs.find(memberID) == memberIDs.end()) {
+            cout << "Member " << memberID << " not found in this class.\n";
+            return;
+        }
+        memberIDs.erase(memberID);
+        cout << "Booking cancelled for " << memberID << ".\n";
+    }
+    unordered_set <string> getMembers() {
+        return memberIDs;
+    }
 };
-
-// void addMember(Member member, Class c) {
-//     if (c.members.size() < c.capacity) {
-//         c.members.push_back(member.id);
-//     }
-// }
-
-// void removeMember(Member member, Class c) {
-//     c.members.erase(remove(c.members.begin(), c.members.end(), member.id), c.members.end());
-// }
-
-// void addToWaitlist(Member member, Class c) {
-//     if (c.members.size() >= c.capacity) {
-//         c.waitlist.push(member.id);
-//     }
-// }
 #endif

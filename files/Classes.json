@@ -6,8 +6,7 @@
         "id": "CL001",
         "members": [
             "M002",
-            "M004",
-            "M002"
+            "M001"
         ],
         "type": "Yoga",
         "waitlist": [
@@ -21,14 +20,12 @@
         "dayTime": "Monday at 16:00",
         "id": "CL002",
         "members": [
-            "M005",
-            "M002",
-            "M003"
+            "M001"
         ],
         "type": "Yoga",
         "waitlist": [
-            "M002",
-            "M003"
+            "M001",
+            "M002"
         ]
     },
     {
@@ -37,7 +34,6 @@
         "dayTime": "Monday at 18:00",
         "id": "CL003",
         "members": [
-            "M002",
             "M003",
             "M001"
         ],
@@ -45,38 +41,6 @@
         "waitlist": [
             "M002",
             "M003"
-        ]
-    },
-    {
-        "capacity": 3,
-        "coachName": "Staff 3",
-        "dayTime": "Wednesday at 18:00",
-        "id": "CL004",
-        "members": [
-            "M004",
-            "M003",
-            "M002"
-        ],
-        "type": "Yoga",
-        "waitlist": [
-            "M003",
-            "M003"
-        ]
-    },
-    {
-        "capacity": 3,
-        "coachName": "Staff 1",
-        "dayTime": "Wednesday at 15:00",
-        "id": "CL005",
-        "members": [
-            "M005",
-            "M003",
-            "M002"
-        ],
-        "type": "Zumba",
-        "waitlist": [
-            "M005",
-            "M004"
         ]
     }
 ]
