@@ -24,6 +24,7 @@
         }
     },
     {
+<<<<<<< Updated upstream
         "dateOfBirth": "2002-09-27",
         "id": "M3067",
         "name": "Lina Mostafa",
@@ -34,5 +35,29 @@
             "price": 2100,
             "startDate": "2024-10-01"
         }
+=======
+        "age": 20,
+        "courtBookingIds": [
+            3
+        ],
+        "id": "M003",
+        "name": "Karim Fady",
+        "password": "karim010",
+        "subscriptionId": 103,
+        "username": "karimfadyy",
+        "workoutIds": [
+            3
+        ]
+    },
+    {
+        "age": 20,
+        "courtBookingIds": [],
+        "id": "",
+        "name": "Karim Fadi",
+        "password": "kfm-test",
+        "subscriptionId": 32765,
+        "username": "karimfadi",
+        "workoutIds": []
+>>>>>>> Stashed changes
     }
 ]

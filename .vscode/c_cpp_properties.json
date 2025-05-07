@@ -1,5 +1,6 @@
 {
     "configurations": [
+<<<<<<< Updated upstream
         {
             "name": "Win32",
             "includePath": [
@@ -18,3 +19,30 @@
     ],
     "version": 4
 }
+=======
+      {
+        "name": "Win32",
+        "includePath": [
+          "${workspaceFolder}/**",
+          "C:/Qt/6.9.0/mingw_64/include",
+          "C:/Qt/6.9.0/mingw_64/include/QtWidgets",
+          "C:/Qt/6.9.0/mingw_64/include/QtCore",
+          "C:/Qt/6.9.0/mingw_64/include/QtGui"
+        ],
+        "defines": [
+          "UNICODE",
+          "_UNICODE",
+          "QT_WIDGETS_LIB",
+          "QT_GUI_LIB",
+          "QT_CORE_LIB"
+        ],
+        "compilerPath": "C:/Qt/Tools/mingw1310_64/bin/g++.exe",
+        "cStandard": "c11",
+        "cppStandard": "c++17",
+        "intelliSenseMode": "windows-gcc-x64"
+      }
+    ],
+    "version": 4
+  }
+  
+>>>>>>> Stashed changes

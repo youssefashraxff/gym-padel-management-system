@@ -8,6 +8,7 @@
 #include "includes/Workout.h"
 #include "includes/Utils.h"
 
+<<<<<<< Updated upstream
 using namespace std;
 
 int main() {
@@ -17,6 +18,36 @@ int main() {
     FileHandler<Workout> workoutHandler("files/Workouts.json");
     FileHandler<Court> courtHandler("files/Courts.json");
     FileHandler<Class> classHandler("files/Classes.json");
+=======
+#include "includes/DataManager.h"
+
+#include "utils/json_utils.h"
+#include "includes/User.h"
+#include "includes/Member.h"
+
+#include <QApplication>
+#include <QResource>
+#include "gui/HomePage.h"
+
+using namespace std;
+
+int main(int argc, char *argv[]) {
+    QResource::registerResource("resources.rcc");
+    DataManager dataManager;
+    dataManager.loadData(); 
+    
+    // User u(dataManager);
+    // u.login();
+
+    QApplication app(argc, argv);
+
+    HomePage home;
+    home.show();
+
+    return app.exec();
+    
+    dataManager.saveData(); 
+>>>>>>> Stashed changes
 
     vector<CourtBooking> courtBookings = courtBookingHandler.read();
     vector<Member> members = memberHandler.read();
