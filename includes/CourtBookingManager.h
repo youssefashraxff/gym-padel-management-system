@@ -6,7 +6,7 @@
 #include"DataManager.h"
 #include "CourtBooking.h"
 
-#include "map"
+#include <unordered_map>
 #include "stack"
 
 #pragma once
@@ -17,7 +17,7 @@ class CourtBookingManager
 private:
 DataManager data_manager;
 public:
-    map<string, stack<CourtBooking>> memberCourtBookings;
+unordered_map<string, stack<CourtBooking>> memberCourtBookings;
 
     CourtBookingManager(DataManager &data_manager){
         this->data_manager=data_manager;
@@ -37,9 +37,6 @@ public:
         memberCourtBookings[memberID].push(c);
         data_manager.courtBookings.push_back(c);
     }
-
-
-
 };
 
 #endif

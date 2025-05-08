@@ -31,13 +31,12 @@ public:
             return "staff";
         return "member";
     }
-    bool getMember(string u, string p)
-    {
-        for (int i = 0; i < dataManager->members.size(); i++)
+    bool getMember(string u, string p){
+        for (const auto& [id, member] : dataManager->membersID)
         {
-            if (dataManager->members[i].username == u && dataManager->members[i].password == p)
+            if (member.username == u && member.password == p)
             {
-                loggedInMember = dataManager->members[i];
+                loggedInMember = member;
                 return true;
             }
         }
@@ -64,7 +63,7 @@ public:
         {
             if (getStaff(username))
             {
-                cout << "Signed in successfully as " << role << ". Welcome, " << loggedInStaff.name << "!\n";
+                cout << "\nSigned in successfully as " << role << ". Welcome, " << loggedInStaff.name << "!\n";
                 return true;
             }
             cout << "Invalid username or password." << endl;
@@ -74,11 +73,11 @@ public:
         {
             if (getMember(username, password))
             {
-                cout << "Signed in successfully as " << role << ". Welcome, " << loggedInMember.name << "!\n";
+                cout << "\nSigned in successfully as " << role << ". Welcome, " << loggedInMember.name << "!\n";
                 return true;
             }
 
-            cout << "Invalid username or password." << endl;
+            cout << "\nInvalid username or password." << endl;
             return false;
         }
     }
@@ -101,8 +100,9 @@ public:
 
         cout << "Enter your Age: ";
         cin >> age;
-        Member loggedInMember(username, password, name, age);
-        dataManager->members.push_back(loggedInMember);
+        Member temp(username, password, name, age,-1);
+        loggedInMember = temp;
+        dataManager->membersID[loggedInMember.id]= loggedInMember;
         cout << "Sign-up successful! \n";
     }
 
@@ -110,7 +110,7 @@ public:
     void login()
     {
         string hasAccount;
-        cout << "Do you have an account? (yes/no): ";
+        cout << "\nDo you have an account? (yes/no): ";
         cin >> hasAccount;
 
         if (hasAccount == "yes" || hasAccount == "YES")
@@ -120,7 +120,15 @@ public:
             cin >> username;
             cout << "Enter password: ";
             cin >> password;
-            signIn(username, password);
+            while (!signIn(username, password))
+            {
+                cout << "\nPlease try again.\n";
+                cout << "Enter username: ";
+                cin >> username;
+                cout << "Enter password: ";
+                cin >> password;
+            }
+            cout << "Login successful!\n";
         }
         else if (hasAccount == "no" || hasAccount == "NO")
         {
@@ -130,5 +138,8 @@ public:
         {
             cout << "Invalid input. Please type 'yes' or 'no'.\n";
         }
+    }
+    Member getLoggedInMember(){
+        return loggedInMember;
     }
 };
