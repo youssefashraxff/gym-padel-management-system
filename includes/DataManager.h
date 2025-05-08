@@ -10,7 +10,6 @@
 #include "Subscription.h"
 #include "CourtBooking.h"
 
-// #include "../utils/json_utils.h"
 
 class DataManager
 {
@@ -24,11 +23,11 @@ private:
     FileHandler<CourtBooking> courtBookingHandler;
 
 public:
-    vector<Member> members;
     vector<Staff> staff;
     vector<Court> courts;
     vector<Class> classes;
-    vector<Subscription> subscriptions;
+    unordered_map<int,Subscription> subscriptionsID;
+    unordered_map<string,Member> membersID;
     vector<CourtBooking> courtBookings;
 
     DataManager() : memberHandler("files/Members.json"),
@@ -40,14 +39,15 @@ public:
 
     void loadData()
     {
-
         try
         {
-            members = memberHandler.read();
+            vector<Member> members = memberHandler.read();
+            loadMembers(members);
             staff = staffHandler.read();
             courts = courtHandler.read();
             classes = classHandler.read();
-            subscriptions = subscriptionHandler.read();
+            vector<Subscription> subscriptions = subscriptionHandler.read();
+            loadSubscriptions(subscriptions);
             courtBookings = courtBookingHandler.read();
         }
         catch (const nlohmann::json::exception &e)
@@ -58,21 +58,48 @@ public:
 
     void saveData()
     {
-
         try
         {
-            memberHandler.write(members);
+            memberHandler.write(getMembersAsVector());
             staffHandler.write(staff);
             courtHandler.write(courts);
             classHandler.write(classes);
-            subscriptionHandler.write(subscriptions);
+            subscriptionHandler.write(getSubscriptionsAsVector());
             courtBookingHandler.write(courtBookings);
         }
         catch (const nlohmann::json::exception &e)
         {
             std::cerr << "[JSON Error] Failed to save data: " << e.what() << endl;
         }
-        std::cout << "[SAVE] Members to save: " << members.size() << std::endl;
+        std::cout << "\n\n[SAVE] Members to save: " << membersID.size() << std::endl;
+    }
+    void loadSubscriptions(const vector<Subscription>& subsList) {
+        for (const auto& sub : subsList) {
+            subscriptionsID[sub.id] = sub;
+        }
+    }
+    void loadMembers(const vector<Member>& membersList) {
+        for (const auto& member : membersList) {
+            membersID[member.id] = member;
+            Member::usedIds.insert(member.id);
+        }
+    }
+    vector<Subscription> getSubscriptionsAsVector() const {
+        vector<Subscription> result;
+        for (const auto& pair : subscriptionsID) {
+            if (pair.first == 0) {
+                std::cout << "[DEBUG] WARNING: Subscription ID 0 exists in map!\n";
+            }
+            result.push_back(pair.second);
+        }
+        return result;
+    }
+    vector<Member> getMembersAsVector() const {
+        vector<Member> result;
+        for (const auto& pair : membersID) {
+            result.push_back(pair.second);
+        }
+        return result;
     }
 };
 

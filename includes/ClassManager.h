@@ -4,7 +4,7 @@
 #pragma once
 
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <stack>
 #include "DataManager.h"
 #include "Class.h"
@@ -17,7 +17,7 @@ private:
     DataManager data_manager;
 
 public:
-    map<string, stack<Class>> memberClasses;
+    unordered_map<string, stack<Class>> memberClasses;
 
     ClassManager(DataManager &data_manager)
     {
@@ -30,8 +30,6 @@ public:
         {
             for ( auto m : c.getMembers())
             {
-                // cout<<"\n\n loading \n\n";
-                // cout<<"Member ID: " << m << " Class ID: " << c.id << endl;
                 memberClasses[m].push(c);
             }
         }
@@ -45,6 +43,19 @@ public:
     void addWorkout(string memberID, Class c)
     {
         memberClasses[memberID].push(c);
+    }
+    void show_member_history(string memberID)
+    {
+        cout << "\n[Your Classes History]\n";
+            stack<Class> workouts = getWorkout(memberID);
+            while (!workouts.empty())
+            {
+                Class workout = workouts.top();
+                workouts.pop();
+                cout << "Class Type: " << workout.type << "\n";
+                cout << "Coach Name: " << workout.coachName << "\n";
+                cout << "Class Time: " << workout.dayTime << "\n";
+            }
     }
 };
 

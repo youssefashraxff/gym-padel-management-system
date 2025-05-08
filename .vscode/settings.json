@@ -9,6 +9,8 @@
     "map": "cpp",
     "string": "cpp",
     "unordered_set": "cpp",
-    "vector": "cpp"
+    "vector": "cpp",
+    "__locale": "cpp",
+    "locale": "cpp"
   }
 }
