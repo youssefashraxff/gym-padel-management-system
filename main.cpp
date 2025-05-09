@@ -4,6 +4,7 @@
 #include "includes/ClassManager.h"
 #include "includes/CourtBookingManager.h"
 #include "includes/SubscriptionManager.h"
+#include "includes/NotificationManager.h"
 
 #include "utils/json_utils.h"
 
@@ -23,6 +24,7 @@ int main()
     ClassManager classManager(dataManager);
     CourtBookingManager courtBookingManager(dataManager);
     SubscriptionManager subscriptionManager(dataManager);
+    NotificationManager notificationManager(dataManager);
 
     subscriptionManager.load_member_subscriptions();
     classManager.load_member_classes();
@@ -41,6 +43,7 @@ int main()
         cout << "[4] View Available Padel Courts\n";
         cout << "[5] View Court Bookings\n";
         cout << "[6] View Workout History\n";
+        cout << "[7] View Notifications\n";
         cout << "[0] Logout / Exit\n";
 
         int choice;
@@ -90,10 +93,17 @@ int main()
             classManager.show_member_history(loggedInMember.id);
             break;
         }
+        case 7:
+        {
+            notificationManager.show(loggedInMember.id);
+            break;
+        }
         case 0:
             running = false;
-            ;
+            break;
         }
     }
     dataManager.saveData();
+    notificationManager.saveAllNotifications();
+    return 0;
 }
