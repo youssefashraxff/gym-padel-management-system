@@ -9,8 +9,9 @@
 
 #include "Member.h"
 #include <unordered_set>
+#include "../utils/utils.h"
 
-// #include "Member.h"
+
 using namespace std;
 
 class Class {
@@ -20,11 +21,10 @@ public:
     string coachName;
     int capacity;
     string dayTime;
-
-
+    vector<string> members;
     queue<string> waitlist;
     unordered_set<string> memberIDs;
-
+ 
 public:
     bool addMember(string memberID) {
         if (memberIDs.size() < capacity) {

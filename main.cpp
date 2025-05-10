@@ -8,11 +8,13 @@
 
 #include "utils/json_utils.h"
 
-#include "User.h"
-#include "Member.h"
-#include "Class.h"
+#include "includes/User.h"
+#include "includes/Member.h"
+#include "includes/Class.h"
 #include "includes/Subscription.h"
 #include "includes/CourtBooking.h"
+#include "includes/Court.h"
+#include "includes/Staff.h"
 #include <stack>
 using namespace std;
 
@@ -29,10 +31,14 @@ int main()
     subscriptionManager.load_member_subscriptions();
     classManager.load_member_classes();
     courtBookingManager.load_member_court_bookings();
-
+  
+    Staff s;
+    s.addClass(dataManager.classes);
     User temp(dataManager);
     temp.login();
     Member loggedInMember = temp.getLoggedInMember();
+
+    
 
     bool running = true;
     while (running)
@@ -45,7 +51,7 @@ int main()
         cout << "[6] View Workout History\n";
         cout << "[7] View Notifications\n";
         cout << "[0] Logout / Exit\n";
-
+        
         int choice;
         cout << "\nEnter your choice: ";
         cin >> choice;
@@ -93,17 +99,19 @@ int main()
             classManager.show_member_history(loggedInMember.id);
             break;
         }
-        case 7:
-        {
-            notificationManager.show(loggedInMember.id);
-            break;
-        }
+         case 7:
+      {
+           notificationManager.show(loggedInMember.id);
+           break;
+       }
         case 0:
             running = false;
-            break;
+            ;
         }
     }
-    dataManager.saveData();
-    notificationManager.saveAllNotifications();
-    return 0;
 }
+
+    notificationManager.saveAllNotifications();
+    dataManager.saveData();
+}
+

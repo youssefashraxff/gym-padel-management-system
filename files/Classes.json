@@ -5,8 +5,8 @@
         "dayTime": "Wednesday at 17:00",
         "id": "CL001",
         "members": [
-            "M001",
-            "M002"
+            "M002",
+            "M001"
         ],
         "type": "Yoga",
         "waitlist": [
@@ -44,5 +44,14 @@
             "M003",
             "M019"
         ]
+    },
+    {
+        "capacity": 0,
+        "coachName": "Staff 4",
+        "dayTime": "sunday at 10:00",
+        "id": "CL004",
+        "members": [],
+        "type": "yoga",
+        "waitlist": []
     }
 ]

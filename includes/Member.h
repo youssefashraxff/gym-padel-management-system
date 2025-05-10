@@ -1,5 +1,3 @@
-
-
 #ifndef MEMBER_H
 #define MEMBER_H
 
@@ -10,7 +8,7 @@
 #include "CourtBooking.h"
 #include "Subscription.h"
 #include <unordered_set>
-
+#include "../utils/utils.h"
 using namespace std;
 
 class Member {
@@ -63,4 +61,4 @@ public:
     }
 };
 inline unordered_set<string> Member::usedIds;
-#endif 
+#endif
