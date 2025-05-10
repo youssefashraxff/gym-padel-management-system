@@ -58,8 +58,8 @@ void from_json(const json& j, Member& m) {
 
 void to_json(json& j, const Staff& s) {
     j = json{
-        {"username" , s.username},
-        {"password" , s.password},
+        {"username",s.username},
+        {"password",s.password},
         {"name", s.name},
         {"id", s.id},
         {"role", s.role}
@@ -67,8 +67,8 @@ void to_json(json& j, const Staff& s) {
 }
 
 void from_json(const json& j, Staff& s) {
-    s.username = j.at("username").get<string>();
-    s.password= j.at("password").get<string>();
+    s.username=j.at("username").get<string>();
+    s.password=j.at("password").get<string>();
     s.name = j.at("name").get<string>();
     s.id = j.at("id").get<string>();
     s.role = j.at("role").get<string>();
@@ -84,6 +84,7 @@ void to_json(json& j, const Class& c) {
         {"capacity", c.capacity},
         {"members", c.memberIDs},
         {"dayTime", c.dayTime},
+        {"members",c.members},
         {"waitlist", queue_to_vector(c.waitlist)}
     };
 }
@@ -95,7 +96,7 @@ void from_json(const json& j, Class& c) {
     j.at("capacity").get_to(c.capacity);
     j.at("members").get_to(c.memberIDs);
     j.at("dayTime").get_to(c.dayTime);
-
+    j.at("members").get_to(c.members);
     vector<string> waitlistVec;
     j.at("waitlist").get_to(waitlistVec);
     c.waitlist = vector_to_queue(waitlistVec);

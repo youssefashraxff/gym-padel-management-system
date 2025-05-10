@@ -26,9 +26,11 @@ public:
     vector<Staff> staff;
     vector<Court> courts;
     vector<Class> classes;
+    vector<Member> members;
     unordered_map<int,Subscription> subscriptionsID;
     unordered_map<string,Member> membersID;
     vector<CourtBooking> courtBookings;
+
 
     DataManager() : memberHandler("files/Members.json"),
                     staffHandler("files/Staff.json"),
