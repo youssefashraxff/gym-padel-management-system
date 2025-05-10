@@ -1,10 +1,7 @@
-
-
 #ifndef JSON_UTILS_H
 #define JSON_UTILS_H
 
 #include "utils.h"
-
 
 #include "../includes/json.hpp"
 using nlohmann::json;
@@ -16,7 +13,8 @@ using nlohmann::json;
 #include "../includes/Court.h"
 #include "../includes/CourtBooking.h"
 #include "../includes/User.h"
-
+#include "../includes/Notification.h"
+#include "../includes/Subscription.h"
 
 #include <sstream>
 #include <iomanip>
@@ -49,6 +47,9 @@ void from_json(const json& j, Court& c);
 void to_json(json& j, const CourtBooking& c);
 void from_json(const json& j, CourtBooking& c);
 
+// Notification
+void to_json(json& j, const Notification& n);
+void from_json(const json& j, Notification& n);
 
 //user
 

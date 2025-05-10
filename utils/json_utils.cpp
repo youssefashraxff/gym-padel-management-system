@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "json_utils.h"
-
+#include "../includes/Notification.h"
 
 using namespace std;
 using json = nlohmann::json;
@@ -138,7 +138,22 @@ void from_json(const json& j, CourtBooking& c) {
     c.time = j.at("time").get<std::string>();
 }
 
+//Notification
+void to_json(json& j, const Notification& n) {
+    j = json{
+        {"type", static_cast<int>(n.type)},
+        {"message", n.message},
+        {"timestamp", time_t_to_string(n.timestamp)},
+        {"memberId", n.memberId}
+    };
+}
 
+void from_json(const json& j, Notification& n) {
+    n.type = static_cast<Notification::Type>(j.at("type").get<int>());
+    n.message = j.at("message").get<string>();
+    n.timestamp = string_to_time_t(j.at("timestamp").get<string>());
+    n.memberId = j.contains("memberId") ? j.at("memberId").get<string>() : "";
+}
 
 // User
 

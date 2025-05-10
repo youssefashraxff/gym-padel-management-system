@@ -34,13 +34,15 @@
         "dayTime": "Monday at 18:00",
         "id": "CL003",
         "members": [
+            "M019",
             "M003",
             "M001"
         ],
         "type": "Zumba",
         "waitlist": [
             "M002",
-            "M003"
+            "M003",
+            "M019"
         ]
     },
     {
