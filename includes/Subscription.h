@@ -10,69 +10,97 @@
 
 using namespace std;
 
-class Subscription {
-    private:
-        static unordered_set<int> usedIds;
+class Subscription
+{
+private:
+    static unordered_set<int> usedIds;
 
-        int generateUniqueId() {
-            int newId;
-            do {
-                newId = rand() % 200 + 100; 
-            } while (usedIds.find(newId) != usedIds.end());
-            usedIds.insert(newId);
-            return newId;
-        }
+    int generateUniqueId()
+    {
+        int newId;
+        do
+        {
+            newId = rand() % 200 + 100;
+        } while (usedIds.find(newId) != usedIds.end());
+        usedIds.insert(newId);
+        return newId;
+    }
 
-    public:
-        int id;
-        string period;
-        int price = 500;
-        time_t startDate;
-        time_t endDate;
-        bool active;
+public:
+    int id;
+    string period;
+    int price = 500;
+    time_t startDate;
+    time_t endDate;
+    bool active;
 
-        Subscription(int period) :  active(true) {
-            startDate = time(nullptr);
-            tm startTm = *localtime(&startDate);
-            id = generateUniqueId();
-            if (period == 1) {
-                this->period = "Monthly";
-                startTm.tm_mon += 1;
-                price *= 1;
+    Subscription(int period, bool discount) : active(true)
+    {
+        startDate = time(nullptr);
+        tm startTm = *localtime(&startDate);
+        id = generateUniqueId();
+        if (period == 1)
+        {
+            this->period = "Monthly";
+            startTm.tm_mon += 1;
+            if (discount)
+            {
+                price *= 0.8;
             }
-            else if (period == 3) {
-                this->period = "3 months";
-                startTm.tm_mon += 3;
-                price = price * 3 - 300;
-            }
-            else if (period == 6) {
-                this->period = "6 months";
-                startTm.tm_mon += 6;
-                price = price * 6 - 600;
-            }
-            else if (period == 12) {
-                this->period = "Yearly";
-                startTm.tm_mon += 12;
-                price = price * 12 - 1200;
-            }
-            else {
-                cerr << "Invalid subscription period: " << period << endl;
-                price = 0;
-                active = false;
-            }
-            endDate = mktime(&startTm);
+            price *= 1;
         }
-        Subscription (){}
+        else if (period == 3)
+        {
+            this->period = "3 months";
+            startTm.tm_mon += 3;
+            if (discount)
+            {
+                price = (price * 3 - 300) * 0.8;
+            }
+            price = price * 3 - 300;
+        }
+        else if (period == 6)
+        {
+            this->period = "6 months";
+            startTm.tm_mon += 6;
+            if (discount)
+            {
+                price = (price * 6 - 600) * 0.8;
+            }
+            price = price * 6 - 600;
+        }
+        else if (period == 12)
+        {
+            this->period = "Yearly";
+            startTm.tm_mon += 12;
+            if (discount)
+            {
+                price = (price * 12 - 1200) * 0.8;
+            }
+            price = price * 12 - 1200;
+        }
+        else
+        {
+            cerr << "Invalid subscription period: " << period << endl;
+            price = 0;
+            active = false;
+        }
+        endDate = mktime(&startTm);
+    }
+    Subscription() {}
 
-        void checkActive() {
-            time_t currentTime = time(nullptr);
-            if (difftime(currentTime, endDate) > 0 && active==true) {
-                active = false;
-            }
+    void checkActive()
+    {
+        time_t currentTime = time(nullptr);
+        if (difftime(currentTime, endDate) > 0 && active == true)
+        {
+            active = false;
         }
-        static void markIdAsUsed(int existingId) {
-            usedIds.insert(existingId);
-        }
+    }
+    static void markIdAsUsed(int existingId)
+    {
+        usedIds.insert(existingId);
+    }
 };
 inline unordered_set<int> Subscription::usedIds;
 #endif

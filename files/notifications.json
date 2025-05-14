@@ -1,26 +1,7 @@
 [
     {
-        "memberId": "M019",
-        "message": "You have been added to the waitlist for Zumba class.\nCoach: Staff 2\nScheduled for: Monday at 18:00\nWe'll notify you when a spot becomes available.",
-        "timestamp": "2025-05-09",
-        "type": 1
-    },
-    {
-        "memberId": "M019",
-        "message": "Class Booking Confirmed!\nClass: Zumba\nCoach: Staff 2\nScheduled for: Monday at 18:00\nPlease arrive 10 minutes before class time.",
-        "timestamp": "2025-05-09",
-        "type": 0
-    },
-    {
-        "memberId": "M019",
-        "message": "Welcome to the Gym Management System! We're excited to have you here.",
-        "timestamp": "2024-03-23",
-        "type": 0
-    },
-    {
-        "memberId": "M001",
-        "message": "Welcome to the Gym Management System! We're excited to have you here.",
-        "timestamp": "2024-03-23",
-        "type": 0
+        "memberId": "M195",
+        "message": "You are added to class CL001\nClass type: Yoga\nDate: 2025-05-29\nCoach: Youssef",
+        "timestamp": "2025-05-15"
     }
 ]

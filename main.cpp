@@ -14,7 +14,7 @@
 #include "includes/Subscription.h"
 #include "includes/CourtBooking.h"
 #include "includes/Court.h"
-#include "includes/Staff.h"
+// #include "includes/Staff.h"
 #include <stack>
 using namespace std;
 
@@ -31,16 +31,136 @@ int main()
     subscriptionManager.load_member_subscriptions();
     classManager.load_member_classes();
     courtBookingManager.load_member_court_bookings();
-  
-    Staff s;
-    s.addClass(dataManager.classes);
+    notificationManager.load_member_notifications();
+
+    // Staff s;
+    // s.addClass(dataManager.classes);
     User temp(dataManager);
     temp.login();
     Member loggedInMember = temp.getLoggedInMember();
 
-    
-
     bool running = true;
+    while (running)
+    {
+        cout << "\n[1] Gym\n[2] Padel\n[0] Exit\n";
+        cout << "\nEnter Choice\n";
+        int menuChoice;
+        cin >> menuChoice;
+        switch (menuChoice)
+        {
+        case 1:
+        {
+            // Gym Menu
+            bool secondRunning = true;
+            while (secondRunning)
+            {
+                cout << "\n[1] View Profile\n";
+                cout << "[2] View Subscription\n";
+                cout << "[3] View Available Classes\n";
+                cout << "[4] Cancel Pending Classes\n";
+                cout << "[5] View Workout History\n";
+                cout << "[6] View Notifications\n";
+                cout << "[0] Logout / Exit\n";
+
+                int choice;
+                cout << "\nEnter your choice: ";
+                cin >> choice;
+
+                switch (choice)
+                {
+                case 1:
+                {
+                    cout << "\n\nTest 1\n\n";
+                    loggedInMember.showProfile();
+                    break;
+                }
+                case 2:
+                {
+                    cout << "\n\nTest 2\n\n";
+                    subscriptionManager.showSubscriptionDetails(loggedInMember);
+                    break;
+                }
+                case 3:
+                {
+                    for (auto it : dataManager.getAvailableClasses())
+                    {
+                        cout << "\nID: " << it.id << "\n";
+                        cout << "Class : " << it.type << "\n";
+                        cout << "Date: " << time_t_to_string(it.dayTime) << "\n";
+                        cout << "Coach : " << it.coachName << "\n";
+                    }
+                    cout << "\nDo you want to book a class? (yes or no)\n";
+                    string choice_sec;
+                    cin >> choice_sec;
+
+                    if (choice_sec == "yes")
+                    {
+                        if (subscriptionManager.getSubscription(loggedInMember.id).active == true)
+                        {
+                            cout << "\n Enter class ID: ";
+                            string classID;
+                            cin >> classID;
+                            Class chosenClass = dataManager.getClassByID(classID);
+
+                            chosenClass.addMember(loggedInMember.id);
+                            classManager.addWorkout(loggedInMember.id, &chosenClass);
+                            dataManager.classesID[chosenClass.id] = chosenClass;
+                        }
+                        else
+                        {
+                            subscriptionManager.showSubscriptionDetails(loggedInMember);
+                        }
+                    }
+                    else
+                    {
+                        // logic
+                    }
+                    break;
+                }
+                case 4:
+                {
+                    classManager.show_member_pending_classes(loggedInMember.id);
+                    cout << "Enter class Id you want to cancel: ";
+                    string classId_forCancel;
+                    cin >> classId_forCancel;
+
+                    Class chosenClass = dataManager.getClassByID(classId_forCancel);
+                    notificationManager.notify_Latest_in_waitinglist(chosenClass.waitlist.front(), chosenClass);
+                    chosenClass.removeMember(loggedInMember.id);
+                    classManager.removeWorkout(loggedInMember.id, &chosenClass);
+                    dataManager.classesID[chosenClass.id] = chosenClass;
+
+                    break;
+                }
+                case 5:
+                {
+                    classManager.show_member_history(loggedInMember.id);
+                    break;
+                }
+                case 6:
+                {
+                    notificationManager.show(loggedInMember.id);
+                }
+                case 0:
+                {
+                    secondRunning = false;
+                    break;
+                }
+                }
+            }
+            break;
+        }
+        case 2:
+            // Padel Menu
+            break;
+        case 0:
+            running = false;
+            break;
+        default:
+            break;
+        }
+    }
+    /*bool running = true;
     while (running)
     {
         cout << "\n[1] View Profile\n";
@@ -51,7 +171,7 @@ int main()
         cout << "[6] View Workout History\n";
         cout << "[7] View Notifications\n";
         cout << "[0] Logout / Exit\n";
-        
+
         int choice;
         cout << "\nEnter your choice: ";
         cin >> choice;
@@ -99,19 +219,15 @@ int main()
             classManager.show_member_history(loggedInMember.id);
             break;
         }
-         case 7:
-      {
-           notificationManager.show(loggedInMember.id);
-           break;
-       }
+        case 7:
+        {
+            // notificationManager.show(loggedInMember.id);
+            break;
+        }
         case 0:
             running = false;
-            ;
         }
-    }
-}
-
-    notificationManager.saveAllNotifications();
+    }*/
+    // notificationManager.saveAllNotifications();
     dataManager.saveData();
 }
-

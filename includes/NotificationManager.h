@@ -10,81 +10,68 @@
 
 using namespace std;
 
-class NotificationManager {
+class NotificationManager
+{
 private:
-    DataManager& dataManager;
-    unordered_map<string, stack<Notification>> notifications;
-    FileHandler<Notification> fileHandler;
+    DataManager &data_manager;
+    unordered_map<string, stack<Notification>> memberNotifications;
 
 public:
-    NotificationManager(DataManager& dm) 
-        : dataManager(dm), fileHandler("files/notifications.json") {
-        
-        vector<Notification> loadedNotifs = fileHandler.read();
-        for (const auto& notif : loadedNotifs) {
-            if (dataManager.membersID.find(notif.memberId) != dataManager.membersID.end()) {
-                notifications[notif.memberId].push(notif);
-            }
+    NotificationManager(DataManager &data_manager) : data_manager(data_manager) {}
+
+    void load_member_notifications()
+    {
+        for (Notification n : data_manager.notifications)
+        {
+            memberNotifications[n.memberId].push(n);
+        }
+    }
+    void addNotification(const string &memberId, const string &message)
+    {
+        if (data_manager.membersID.count(memberId))
+        {
+            Notification n(message, memberId);
+            memberNotifications[memberId].push(n);
+            data_manager.notifications.push_back(n);
         }
     }
 
-   
-    void saveAllNotifications() {
-        vector<Notification> allNotifs;
-        for (const auto& [memberId, memberStack] : notifications) {
-            stack<Notification> temp = memberStack;
-            while (!temp.empty()) {
-                allNotifs.push_back(temp.top());
-                temp.pop();
-            }
-        }
-        fileHandler.write(allNotifs);
+    void notify_Latest_in_waitinglist(string memberID, Class c)
+    {
+        string msg = "You are added to class " + c.id + "\n"
+                                                        "Class type: " +
+                     c.type + "\n"
+                              "Date: " +
+                     time_t_to_string(c.dayTime) + "\n"
+                                                   "Coach: " +
+                     c.coachName;
+
+        addNotification(memberID, msg);
     }
 
-    void addNotification(const string& memberId, const string& message, Notification::Type type) {
-        if (dataManager.membersID.find(memberId) != dataManager.membersID.end()) {
-            notifications[memberId].push(Notification(type, message, memberId));
-        }
-    }
+    // void notifySubscriptionExpiry(const string &memberId, int daysLeft)
+    // {
+    //     if (daysLeft <= 0)
+    //         return;
 
-    void notifyClassBooking(const string& memberId, const string& classType, 
-                          const string& coachName, const string& dayTime) {
-        string msg = "Class Booking Confirmed!\n"
-                    "Class: " + classType + "\n"
-                    "Coach: " + coachName + "\n"
-                    "Time: " + dayTime;
-        addNotification(memberId, msg, Notification::CLASS_BOOKING);
-    }
+    //     string msg = "Subscription expires in " + to_string(daysLeft) +
+    //                  (daysLeft == 1 ? " day" : " days");
+    //     addNotification(memberId, msg);
+    // }
 
-    void notifyWaitlist(const string& memberId, const string& classType, 
-                       const string& coachName, const string& dayTime) {
-        string msg = "Added to Waitlist:\n"
-                    "Class: " + classType + "\n"
-                    "Coach: " + coachName + "\n"
-                    "Time: " + dayTime;
-        addNotification(memberId, msg, Notification::WAITLIST_UPDATE);
-    }
-
-    void notifySubscriptionExpiry(const string& memberId, int daysLeft) {
-        if (daysLeft <= 0) return;
-        
-        string msg = "Subscription expires in " + to_string(daysLeft) + 
-                    (daysLeft == 1 ? " day" : " days");
-        addNotification(memberId, msg, 
-                       daysLeft == 1 ? Notification::SUBSCRIPTION_REMINDER_1DAY 
-                                   : Notification::SUBSCRIPTION_REMINDER_3DAYS);
-    }
-
-    void show(const string& memberId) {
-        if (notifications[memberId].empty()) {
+    void show(const string &memberId)
+    {
+        if (memberNotifications[memberId].empty())
+        {
             cout << "\nNo notifications.\n";
             return;
         }
 
         cout << "\n[Your Notifications]\n";
-        stack<Notification> temp = notifications[memberId];
-        while (!temp.empty()) {
-            const auto& notif = temp.top();
+        stack<Notification> temp = memberNotifications[memberId];
+        while (!temp.empty())
+        {
+            const auto &notif = temp.top();
             cout << "\n[" << time_t_to_string(notif.timestamp) << "]\n"
                  << notif.message << "\n"
                  << "----------------------------------\n";

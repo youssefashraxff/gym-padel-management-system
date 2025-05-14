@@ -6,21 +6,21 @@
 using namespace std;
 using json = nlohmann::json;
 
+// Subscription
 
-//Subscription
-
-void to_json(json& j, const Subscription& sub) {
+void to_json(json &j, const Subscription &sub)
+{
     j = json{
-        {"id" , sub.id},
+        {"id", sub.id},
         {"period", sub.period},
         {"price", sub.price},
         {"startDate", time_t_to_string(sub.startDate)},
         {"endDate", time_t_to_string(sub.endDate)},
-        {"active", sub.active}
-    };
+        {"active", sub.active}};
 }
 
-void from_json(const json& j, Subscription& sub) {
+void from_json(const json &j, Subscription &sub)
+{
     j.at("id").get_to(sub.id);
     j.at("period").get_to(sub.period);
     j.at("price").get_to(sub.price);
@@ -32,20 +32,21 @@ void from_json(const json& j, Subscription& sub) {
     j.at("active").get_to(sub.active);
 }
 
-//Member
+// Member
 
-void to_json(json& j, const Member& m) {
+void to_json(json &j, const Member &m)
+{
     j = {
         {"id", m.id},
         {"name", m.name},
         {"username", m.username},
         {"password", m.password},
         {"age", m.Age},
-        {"subscriptionId", m.subscriptionId}
-    };
+        {"subscriptionId", m.subscriptionId}};
 }
 
-void from_json(const json& j, Member& m) {
+void from_json(const json &j, Member &m)
+{
     j.at("name").get_to(m.name);
     j.at("username").get_to(m.username);
     j.at("password").get_to(m.password);
@@ -54,83 +55,87 @@ void from_json(const json& j, Member& m) {
     j.at("subscriptionId").get_to(m.subscriptionId);
 }
 
-//Staff
+// Staff
 
-void to_json(json& j, const Staff& s) {
+void to_json(json &j, const Staff &s)
+{
     j = json{
-        {"username",s.username},
-        {"password",s.password},
+        {"username", s.username},
+        {"password", s.password},
         {"name", s.name},
         {"id", s.id},
-        {"role", s.role}
-    };
+        {"role", s.role}};
 }
 
-void from_json(const json& j, Staff& s) {
-    s.username=j.at("username").get<string>();
-    s.password=j.at("password").get<string>();
+void from_json(const json &j, Staff &s)
+{
+    s.username = j.at("username").get<string>();
+    s.password = j.at("password").get<string>();
     s.name = j.at("name").get<string>();
     s.id = j.at("id").get<string>();
     s.role = j.at("role").get<string>();
 }
 
-//Class
+// Class
 
-void to_json(json& j, const Class& c) {
+void to_json(json &j, const Class &c)
+{
     j = json{
         {"type", c.type},
         {"id", c.id},
         {"coachName", c.coachName},
         {"capacity", c.capacity},
-        {"members", c.memberIDs},
-        {"dayTime", c.dayTime},
-        {"members",c.members},
-        {"waitlist", queue_to_vector(c.waitlist)}
-    };
+        {"memberIDs", c.memberIDs},
+        {"dayTime", c.dayTime}, // store as time_t (number)
+        {"waitlist", queue_to_vector(c.waitlist)}};
 }
 
-void from_json(const json& j, Class& c) {
+void from_json(const json &j, Class &c)
+{
     j.at("type").get_to(c.type);
     j.at("id").get_to(c.id);
     j.at("coachName").get_to(c.coachName);
     j.at("capacity").get_to(c.capacity);
-    j.at("members").get_to(c.memberIDs);
-    j.at("dayTime").get_to(c.dayTime);
-    j.at("members").get_to(c.members);
+    j.at("memberIDs").get_to(c.memberIDs);
+
+    j.at("dayTime").get_to(c.dayTime); // get as time_t (number)
+
     vector<string> waitlistVec;
     j.at("waitlist").get_to(waitlistVec);
     c.waitlist = vector_to_queue(waitlistVec);
 }
 
-//Court
+// Court
 
-void to_json(json& j, const Court& c) {
+void to_json(json &j, const Court &c)
+{
     j = json{
         {"id", c.id},
         {"location", c.location},
-        {"timeSlots", c.timeSlots}
-    };
+        {"timeSlots", c.timeSlots}};
 }
 
-void from_json(const json& j, Court& c) {
+void from_json(const json &j, Court &c)
+{
     j.at("id").get_to(c.id);
     j.at("location").get_to(c.location);
     j.at("timeSlots").get_to(c.timeSlots);
 }
 
-//Court Booking
+// Court Booking
 
-void to_json(json& j, const CourtBooking& c) {
+void to_json(json &j, const CourtBooking &c)
+{
     j = json{
         {"courtID", c.courtID},
         {"memberID", c.memberID},
         {"location", c.location},
         {"date", time_t_to_string(c.date)},
-        {"time", c.time}
-    };
+        {"time", c.time}};
 }
 
-void from_json(const json& j, CourtBooking& c) {
+void from_json(const json &j, CourtBooking &c)
+{
     c.courtID = j.at("courtID").get<std::string>();
     c.memberID = j.at("memberID").get<std::string>();
     c.location = j.at("location").get<std::string>();
@@ -138,18 +143,17 @@ void from_json(const json& j, CourtBooking& c) {
     c.time = j.at("time").get<std::string>();
 }
 
-//Notification
-void to_json(json& j, const Notification& n) {
+// Notification
+void to_json(json &j, const Notification &n)
+{
     j = json{
-        {"type", static_cast<int>(n.type)},
         {"message", n.message},
         {"timestamp", time_t_to_string(n.timestamp)},
-        {"memberId", n.memberId}
-    };
+        {"memberId", n.memberId}};
 }
 
-void from_json(const json& j, Notification& n) {
-    n.type = static_cast<Notification::Type>(j.at("type").get<int>());
+void from_json(const json &j, Notification &n)
+{
     n.message = j.at("message").get<string>();
     n.timestamp = string_to_time_t(j.at("timestamp").get<string>());
     n.memberId = j.contains("memberId") ? j.at("memberId").get<string>() : "";
