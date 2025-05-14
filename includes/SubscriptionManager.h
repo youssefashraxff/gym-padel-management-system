@@ -10,6 +10,8 @@
 #include "Subscription.h"
 #include "Member.h"
 
+#include <ctime>
+
 #include "../utils/utils.h"
 using namespace std;
 
@@ -17,34 +19,36 @@ class SubscriptionManager
 {
 private:
     DataManager &data_manager;
+
 public:
     unordered_map<string, Subscription> memberSubscription;
 
-    SubscriptionManager(DataManager& data_manager)
+    SubscriptionManager(DataManager &data_manager)
         : data_manager(data_manager) {}
 
     void load_member_subscriptions()
     {
-        for (const auto& [id, m] : data_manager.membersID)
+        for (const auto &[id, m] : data_manager.membersID)
         {
             auto it = data_manager.subscriptionsID.find(m.subscriptionId);
-    
+
             if (it != data_manager.subscriptionsID.end())
             {
-                Subscription& sub = it->second;
+                Subscription &sub = it->second;
 
                 sub.checkActive();
-
                 Subscription::markIdAsUsed(sub.id);
+
+                memberSubscription[id] = sub;
             }
         }
     }
-    void addSubscription(Member &loggedInMember)
+    void addSubscription(Member &loggedInMember, bool discount)
     {
         cout << "Enter Subscription Period (Monthly, 3 months, 6 months, Yearly): ";
         int period;
         cin >> period;
-        Subscription sub(period);
+        Subscription sub(period, discount);
         loggedInMember.subscriptionId = sub.id;
         data_manager.subscriptionsID[sub.id] = sub;
         data_manager.membersID[loggedInMember.id] = loggedInMember;
@@ -71,11 +75,12 @@ public:
             cin >> choice;
             if (choice == "yes" || choice == "YES")
             {
-                addSubscription(loggedInMember);
+                addSubscription(loggedInMember, false);
             }
             return;
         }
-        else{
+        else
+        {
             Subscription &sub = getSubscription(loggedInMember.id);
             cout << "\nPeriod: " << sub.period << "\n";
             cout << "Price: " << sub.price << "\n";
@@ -84,7 +89,7 @@ public:
             cout << "Status: " << (sub.active ? "Active" : "Inactive") << "\n";
             cout << "Subscription ID: " << sub.id << "\n";
 
-            cout << "[1] Cancel your subscription?\n";
+            cout << "[\n1] Cancel your subscription?\n";
             cout << "[2] Renew your subscription?\n";
             cout << "[0] Back\n";
 
@@ -93,19 +98,32 @@ public:
             cin >> choice;
             switch (choice)
             {
-                case 1:
-                    removeSubscription(loggedInMember);
-                    break;
-                case 2:
-                    addSubscription(loggedInMember);
-                    break;
-                case 0:
-                    cout << "\nBack to main menu\n";
-                    break;
+            case 1:
+                removeSubscription(loggedInMember);
+                break;
+            case 2:
+            {
+                Subscription &sub = getSubscription(loggedInMember.id);
+                if ((sub.endDate - time(nullptr)) >= 3)
+                {
+                    cout << "\nCongratulations, you got an early discount rate.\n";
+                    addSubscription(loggedInMember, true);
+                }
+                else
+                {
+                    addSubscription(loggedInMember, false);
+                }
+                break;
+            }
+            case 0:
+            {
+                cout << "\nBack to main menu\n";
+                break;
+            }
             }
         }
     }
-    Subscription& getSubscription(string memberID)
+    Subscription &getSubscription(string memberID)
     {
         return memberSubscription[memberID];
     }

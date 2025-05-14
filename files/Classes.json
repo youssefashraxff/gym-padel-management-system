@@ -1,56 +1,40 @@
 [
     {
-        "capacity": 3,
-        "coachName": "Staff 4",
-        "dayTime": "Wednesday at 17:00",
+        "capacity": 2,
+        "coachName": "Youssef",
+        "dayTime": 1748530800,
         "id": "CL001",
-        "members": [
-            "M002",
-            "M001"
-        ],
-        "type": "Yoga",
-        "waitlist": [
-            "M003",
-            "M004"
-        ]
-    },
-    {
-        "capacity": 3,
-        "coachName": "Staff 3",
-        "dayTime": "Monday at 16:00",
-        "id": "CL002",
-        "members": [
-            "M001"
-        ],
-        "type": "Yoga",
-        "waitlist": [
+        "memberIDs": [
             "M001",
-            "M002"
-        ]
+            "M195"
+        ],
+        "type": "Yoga",
+        "waitlist": []
     },
     {
         "capacity": 3,
-        "coachName": "Staff 2",
-        "dayTime": "Monday at 18:00",
-        "id": "CL003",
-        "members": [
-            "M019",
-            "M003",
-            "M001"
-        ],
-        "type": "Zumba",
-        "waitlist": [
-            "M002",
-            "M003",
-            "M019"
-        ]
+        "coachName": "Youssef",
+        "dayTime": 1748617200,
+        "id": "CL002",
+        "memberIDs": [],
+        "type": "Yoga",
+        "waitlist": []
     },
     {
-        "capacity": 0,
-        "coachName": "Staff 4",
-        "dayTime": "sunday at 10:00",
+        "capacity": 3,
+        "coachName": "Ali",
+        "dayTime": 1748703600,
+        "id": "CL003",
+        "memberIDs": [],
+        "type": "Zumba",
+        "waitlist": []
+    },
+    {
+        "capacity": 2,
+        "coachName": "Ali",
+        "dayTime": 1746877200,
         "id": "CL004",
-        "members": [],
+        "memberIDs": [],
         "type": "yoga",
         "waitlist": []
     }

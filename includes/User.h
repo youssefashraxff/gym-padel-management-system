@@ -30,8 +30,9 @@ public:
             return "staff";
         return "member";
     }
-    bool getMember(string u, string p){
-        for (const auto& [id, member] : dataManager->membersID)
+    bool getMember(string u, string p)
+    {
+        for (const auto &[id, member] : dataManager->membersID)
         {
             if (member.username == u && member.password == p)
             {
@@ -62,7 +63,7 @@ public:
         {
             if (getStaff(username))
             {
-                cout << "\nSigned in successfully as " << role << ". Welcome, " << loggedInStaff.name << "!\n";
+                cout << "\nSigned in successfully." << "Welcome, " << loggedInStaff.name << "!\n";
                 return true;
             }
             cout << "Invalid username or password." << endl;
@@ -72,7 +73,7 @@ public:
         {
             if (getMember(username, password))
             {
-                cout << "\nSigned in successfully as " << role << ". Welcome, " << loggedInMember.name << "!\n";
+                cout << "\nSigned in successfully. Welcome, " << loggedInMember.name << "!\n";
                 return true;
             }
 
@@ -99,10 +100,10 @@ public:
 
         cout << "Enter your Age: ";
         cin >> age;
-        Member temp(username, password, name, age,-1);
+        Member temp(username, password, name, age, -1);
         loggedInMember = temp;
-        dataManager->membersID[loggedInMember.id]= loggedInMember;
-        cout << "Sign-up successful! \n";
+        dataManager->membersID[loggedInMember.id] = loggedInMember;
+        cout << "\nSigned up successfully. Welcome, " << loggedInMember.name << "!\n";
     }
 
     // LOGIN FUNCTION
@@ -138,7 +139,8 @@ public:
             cout << "Invalid input. Please type 'yes' or 'no'.\n";
         }
     }
-    Member getLoggedInMember(){
+    Member getLoggedInMember()
+    {
         return loggedInMember;
     }
 };
