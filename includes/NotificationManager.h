@@ -49,7 +49,7 @@ public:
         addNotification(memberID, msg);
     }
 
-    void notifySubscriptionExpiry(string &memberId, int daysLeft)
+    void notifySubscriptionExpiry(const string &memberId, int daysLeft)
     {
         string msg = "Subscription expires in " + to_string(daysLeft) +
                      (daysLeft == 1 ? " day" : " days");

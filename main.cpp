@@ -31,6 +31,7 @@ int main()
     classManager.load_member_classes();
     courtBookingManager.load_member_court_bookings();
     notificationManager.load_member_notifications();
+    subscriptionManager.load_member_subscriptions(notificationManager);
 
     User temp(dataManager);
     temp.login();
@@ -39,7 +40,6 @@ int main()
     {
         // A member is logged in
         Member loggedInMember = temp.getLoggedInMember();
-        subscriptionManager.load_member_subscriptions(loggedInMember, notificationManager);
         bool running = true;
         while (running)
         {
