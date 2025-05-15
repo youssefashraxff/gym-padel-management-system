@@ -27,24 +27,24 @@ public:
     SubscriptionManager(DataManager &data_manager)
         : data_manager(data_manager) {}
 
-    void load_member_subscriptions(Member &loggedInMember, NotificationManager &notification_manager)
+    void load_member_subscriptions(NotificationManager &notification_manager)
     {
-        for (const auto &[id, m] : data_manager.membersID)
+        for (auto &[id, m] : data_manager.membersID)
         {
             auto it = data_manager.subscriptionsID.find(m.subscriptionId);
-
             if (it != data_manager.subscriptionsID.end())
             {
                 Subscription &sub = it->second;
+                const string &memberID = m.id;
 
                 sub.checkActive();
+                int daysLeft = static_cast<int>((sub.endDate - time(nullptr)) / (60 * 60 * 24));
                 if (sub.checkForRenewal())
                 {
-                    notification_manager.notifySubscriptionExpiry(loggedInMember.id, (sub.endDate - time(nullptr)) / (60 * 60 * 24));
+                    notification_manager.notifySubscriptionExpiry(memberID, daysLeft);
                 }
                 Subscription::markIdAsUsed(sub.id);
-
-                memberSubscription[m.id] = sub;
+                memberSubscription[memberID] = sub;
             }
         }
     }

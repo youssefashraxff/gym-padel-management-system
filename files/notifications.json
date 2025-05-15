@@ -3,5 +3,10 @@
         "memberId": "M195",
         "message": "You are added to class CL001\nClass type: Yoga\nDate: 2025-05-29\nCoach: Youssef",
         "timestamp": "2025-05-15"
+    },
+    {
+        "memberId": "M001",
+        "message": "Subscription expires in 1 day",
+        "timestamp": "2025-05-15"
     }
 ]

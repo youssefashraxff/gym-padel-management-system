@@ -100,11 +100,9 @@ public:
     bool checkForRenewal()
     {
         time_t currentTime = time(nullptr);
-        if (difftime(endDate, currentTime) <= 3 && active == true)
-        {
-            return true;
-        }
-        return false;
+        double daysLeft = difftime(endDate, currentTime) / (60 * 60 * 24);
+
+        return active && daysLeft <= 3 && daysLeft >= 0;
     }
     static void markIdAsUsed(int existingId)
     {
