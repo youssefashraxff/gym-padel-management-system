@@ -87,6 +87,7 @@ public:
     {
         string username, password, name;
         int age;
+        bool isVip = false;
 
         cout << "Enter a new username : ";
         cin >> username;
@@ -100,7 +101,13 @@ public:
 
         cout << "Enter your Age: ";
         cin >> age;
-        Member temp(username, password, name, age, -1);
+
+        cout << "Would you like to be a VIP member? (yes/no): ";
+        string vipChoice;
+        cin >> vipChoice;
+        isVip = (vipChoice == "yes" || vipChoice == "YES");
+
+        Member temp(username, password, name, age, isVip, -1);
         loggedInMember = temp;
         dataManager->membersID[loggedInMember.id] = loggedInMember;
         cout << "\nSigned up successfully. Welcome, " << loggedInMember.name << "!\n";

@@ -42,7 +42,8 @@ void to_json(json &j, const Member &m)
         {"username", m.username},
         {"password", m.password},
         {"age", m.Age},
-        {"subscriptionId", m.subscriptionId}};
+        {"subscriptionId", m.subscriptionId},
+        {"isVip", m.isVip}};
 }
 
 void from_json(const json &j, Member &m)
@@ -53,6 +54,7 @@ void from_json(const json &j, Member &m)
     j.at("id").get_to(m.id);
     j.at("age").get_to(m.Age);
     j.at("subscriptionId").get_to(m.subscriptionId);
+    j.at("isVip").get_to(m.isVip);
 }
 
 // Staff
