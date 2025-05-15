@@ -25,5 +25,6 @@
   },
 
   // optional: disable showing Output tab completely
-  "code-runner.showOutput": false
+  "code-runner.showOutput": false,
+  "C_Cpp.errorSquiggles": "enabled"
 }

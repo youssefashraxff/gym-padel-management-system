@@ -26,14 +26,25 @@ public:
             memberNotifications[n.memberId].push(n);
         }
     }
-    void addNotification(const string &memberId, const string &message)
+    bool addNotification(const string &memberId, const string &message)
     {
         if (data_manager.membersID.count(memberId))
         {
+
+            if (!memberNotifications[memberId].empty())
+            {
+                string testMessage = memberNotifications[memberId].top().message;
+                if (testMessage == message)
+                {
+                    return false;
+                }
+            }
             Notification n(message, memberId);
             memberNotifications[memberId].push(n);
             data_manager.notifications.push_back(n);
+            return true;
         }
+        return false;
     }
 
     void notify_Latest_in_waitinglist(string memberID, Class c)

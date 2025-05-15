@@ -30,18 +30,25 @@ public:
     Class(string type, string id, string coachName, string coachId, int capacity, time_t dayTime)
         : type(type), id(id), coachName(coachName), coachId(coachId), capacity(capacity), dayTime(dayTime) {}
     Class() {}
-    void addMember(string memberID)
+    bool addMember(string memberID)
     {
         if (memberIDs.size() < capacity)
         {
+            if (memberIDs.find(memberID) != memberIDs.end())
+            {
+                cout << "Member " << memberID << " is already booked in this class.\n";
+                return false;
+            }
             memberIDs.insert(memberID);
             cout << "Booking confirmed for " << memberID << ".\n";
             cout << "\n\nMembers " << memberIDs.size() << "\n";
+            return true;
         }
         else
         {
             waitlist.push(memberID);
             cout << "Class is full. " << memberID << " added to waitlist.\n";
+            return false;
         }
     }
     void removeMember(string memberID)

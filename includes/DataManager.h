@@ -35,7 +35,8 @@ public:
     unordered_map<string, Member *> membersUsername;
     unordered_map<string, Class> classesID;
     unordered_map<string, stack<Class *>> classesByCoachID;
-    vector<CourtBooking> courtBookings;
+    unordered_map<string, CourtBooking> courtBookings;
+    // vector<CourtBooking> courtBookings;
 
     DataManager() : memberHandler("files/Members.json"),
                     staffHandler("files/Staff.json"),
@@ -61,7 +62,8 @@ public:
             loadClasses(classes);
             vector<Subscription> subscriptions = subscriptionHandler.read();
             loadSubscriptions(subscriptions);
-            courtBookings = courtBookingHandler.read();
+            vector<CourtBooking> courtBookings = courtBookingHandler.read();
+
             notifications = notificationHandler.read();
             courts = courtHandler.read();
         }
@@ -81,7 +83,7 @@ public:
             notificationHandler.write(notifications);
             classHandler.write(getClassesAsVector());
             subscriptionHandler.write(getSubscriptionsAsVector());
-            courtBookingHandler.write(courtBookings);
+            courtBookingHandler.write(GetCourtBookingsAsVector());
         }
         catch (const nlohmann::json::exception &e)
         {
@@ -94,6 +96,14 @@ public:
         for (const auto &sub : subsList)
         {
             subscriptionsID[sub.id] = sub;
+        }
+    }
+    void loadBookings(const vector<CourtBooking> &bookings)
+    {
+        for (const auto &cb : bookings)
+        {
+            courtBookings[cb.bookingID] = cb;
+            CourtBooking::usedIds.insert(cb.bookingID);
         }
     }
     void loadMembers(const vector<Member> &membersList)
@@ -151,6 +161,15 @@ public:
         }
         return result;
     }
+    vector<CourtBooking> GetCourtBookingsAsVector() const
+    {
+        vector<CourtBooking> result;
+        for (const auto &pair : courtBookings)
+        {
+            result.push_back(pair.second);
+        }
+        return result;
+    }
     vector<Class> getClassesAsVector() const
     {
         vector<Class> result;
@@ -174,7 +193,7 @@ public:
         }
         return temp;
     }
-    Class getClassByID(string chosenClassID)
+    Class &getClassByID(const string &chosenClassID)
     {
         return classesID[chosenClassID];
     }

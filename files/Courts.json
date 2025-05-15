@@ -1,102 +1,192 @@
 [
     {
+        "daySlots": {
+            "2025-05-16": {
+                "10:00": true,
+                "11:00": false,
+                "12:00": true,
+                "13:00": true,
+                "14:00": true,
+                "15:00": true,
+                "16:00": false,
+                "17:00": true,
+                "18:00": true,
+                "19:00": true,
+                "20:00": false,
+                "21:00": false,
+                "8:00": true,
+                "9:00": true
+            },
+            "2025-06-10": {
+                "10:00": true,
+                "11:00": true,
+                "12:00": false,
+                "13:00": false,
+                "14:00": true,
+                "15:00": true,
+                "16:00": true,
+                "17:00": false,
+                "18:00": true,
+                "19:00": true,
+                "20:00": false,
+                "21:00": true,
+                "8:00": true,
+                "9:00": false
+            }
+        },
         "id": "Court1",
-        "location": "Padel Zone",
-        "timeSlots": {
-            "10:00": true,
-            "11:00": false,
-            "12:00": false,
-            "13:00": false,
-            "14:00": true,
-            "15:00": false,
-            "16:00": false,
-            "17:00": true,
-            "18:00": true,
-            "19:00": true,
-            "20:00": false,
-            "21:00": false,
-            "8:00": true,
-            "9:00": true
-        }
+        "location": "Pzone-tagamoa"
     },
     {
+        "daySlots": {
+            "2025-05-09": {
+                "10:00": true,
+                "11:00": true,
+                "12:00": true,
+                "13:00": true,
+                "14:00": true,
+                "15:00": true,
+                "16:00": true,
+                "17:00": true,
+                "18:00": true,
+                "19:00": true,
+                "20:00": true,
+                "21:00": true,
+                "8:00": true,
+                "9:00": true
+            },
+            "2025-05-10": {
+                "10:00": true,
+                "11:00": true,
+                "12:00": true,
+                "13:00": true,
+                "14:00": true,
+                "15:00": true,
+                "16:00": true,
+                "17:00": true,
+                "18:00": true,
+                "19:00": true,
+                "20:00": true,
+                "21:00": true,
+                "8:00": true,
+                "9:00": true
+            }
+        },
         "id": "Court2",
-        "location": "Padel Zone",
-        "timeSlots": {
-            "10:00": true,
-            "11:00": true,
-            "12:00": false,
-            "13:00": false,
-            "14:00": true,
-            "15:00": true,
-            "16:00": true,
-            "17:00": true,
-            "18:00": true,
-            "19:00": false,
-            "20:00": true,
-            "21:00": true,
-            "8:00": true,
-            "9:00": true
-        }
+        "location": "Pzone-tagamoa"
     },
     {
+        "daySlots": {
+            "2025-05-11": {
+                "10:00": false,
+                "11:00": true,
+                "12:00": true,
+                "13:00": true,
+                "14:00": false,
+                "15:00": true,
+                "16:00": false,
+                "17:00": false,
+                "18:00": true,
+                "19:00": true,
+                "20:00": false,
+                "21:00": false,
+                "8:00": false,
+                "9:00": false
+            },
+            "2025-05-12": {
+                "10:00": true,
+                "11:00": false,
+                "12:00": true,
+                "13:00": false,
+                "14:00": true,
+                "15:00": true,
+                "16:00": true,
+                "17:00": false,
+                "18:00": true,
+                "19:00": false,
+                "20:00": true,
+                "21:00": false,
+                "8:00": false,
+                "9:00": false
+            }
+        },
         "id": "Court3",
-        "location": "Main Hall",
-        "timeSlots": {
-            "10:00": false,
-            "11:00": true,
-            "12:00": true,
-            "13:00": true,
-            "14:00": false,
-            "15:00": true,
-            "16:00": false,
-            "17:00": false,
-            "18:00": true,
-            "19:00": true,
-            "20:00": false,
-            "21:00": false,
-            "8:00": false,
-            "9:00": false
-        }
+        "location": "Pzone-sheraton"
     },
     {
+        "daySlots": {
+            "2025-05-11": {
+                "10:00": true,
+                "11:00": true,
+                "12:00": true,
+                "13:00": true,
+                "14:00": false,
+                "15:00": false,
+                "16:00": true,
+                "17:00": false,
+                "18:00": false,
+                "19:00": false,
+                "20:00": true,
+                "21:00": true,
+                "8:00": false,
+                "9:00": true
+            },
+            "2025-05-12": {
+                "10:00": false,
+                "11:00": true,
+                "12:00": true,
+                "13:00": false,
+                "14:00": true,
+                "15:00": true,
+                "16:00": false,
+                "17:00": true,
+                "18:00": false,
+                "19:00": false,
+                "20:00": true,
+                "21:00": true,
+                "8:00": true,
+                "9:00": true
+            }
+        },
         "id": "Court4",
-        "location": "Padel Zone",
-        "timeSlots": {
-            "10:00": true,
-            "11:00": true,
-            "12:00": true,
-            "13:00": true,
-            "14:00": false,
-            "15:00": false,
-            "16:00": true,
-            "17:00": false,
-            "18:00": false,
-            "19:00": false,
-            "20:00": true,
-            "21:00": true,
-            "8:00": false,
-            "9:00": true
-        }
+        "location": "Pzone-sheraton"
     },
     {
+        "daySlots": {
+            "2025-05-13": {
+                "10:00": false,
+                "11:00": false,
+                "12:00": true,
+                "13:00": true,
+                "14:00": true,
+                "15:00": true,
+                "16:00": false,
+                "17:00": true,
+                "18:00": false,
+                "19:00": false,
+                "20:00": true,
+                "21:00": false,
+                "8:00": false,
+                "9:00": true
+            },
+            "2025-05-14": {
+                "10:00": true,
+                "11:00": true,
+                "12:00": true,
+                "13:00": true,
+                "14:00": true,
+                "15:00": true,
+                "16:00": false,
+                "17:00": true,
+                "18:00": false,
+                "19:00": true,
+                "20:00": true,
+                "21:00": false,
+                "8:00": false,
+                "9:00": false
+            }
+        },
         "id": "Court5",
-        "location": "Main Hall",
-        "timeSlots": {
-            "10:00": false,
-            "11:00": false,
-            "12:00": true,
-            "13:00": true,
-            "14:00": true,
-            "15:00": true,
-            "16:00": false,
-            "17:00": true,
-            "18:00": false,
-            "19:00": false,
-            "20:00": true,
-            "21:00": false,
-            "8:00": false,
-            "9:00": true
-        }
+        "location": "Pzone-sheraton"
     }
 ]

@@ -73,7 +73,7 @@ public:
             cout << "----------------------------------\n";
             tempClasses.pop();
         }
-        }
+    }
     void removeClass(unordered_map<string, Class> &classesID)
     {
         string classID;
@@ -131,6 +131,110 @@ public:
 class Manager : public Staff
 {
 public:
-    // Manager Methods
+    Manager() {}
+    Manager(const Staff &s)
+    {
+        id = s.id;
+        name = s.name;
+        username = s.username;
+        password = s.password;
+        role = s.role;
+    }
+    void topActiveMembersMonthly(const vector<Member> &members, const vector<Class> &classes, int N, const string &targetMonth)
+    {
+        unordered_map<string, int> active; // memberID -> count
+
+        for (const auto &c : classes)
+        {
+            // Convert dayTime (time_t) to "YYYY-MM"
+            time_t t = c.dayTime;
+            tm *ltm = localtime(&t);
+            string month = to_string(1900 + ltm->tm_year) + "-" +
+                           (ltm->tm_mon + 1 < 10 ? "0" : "") + to_string(ltm->tm_mon + 1);
+
+            if (month == targetMonth)
+            {
+                for (const auto &memberID : c.memberIDs)
+                    active[memberID]++;
+            }
+        }
+
+        // Sort by activity count (highest first)
+        vector<pair<string, int>> sorted(active.begin(), active.end());
+        sort(sorted.begin(), sorted.end(), [](auto &a, auto &b)
+             { return a.second > b.second; });
+
+        cout << "\n[Top " << N << " Active Members in " << targetMonth << "]\n";
+        cout << "----------------------------------\n";
+        int shown = 0;
+        for (auto &p : sorted)
+        {
+            if (shown >= N)
+                break;
+            for (const auto &m : members)
+            {
+                if (m.id == p.first)
+                {
+                    cout << "Name: " << m.name << "\nID: " << m.id
+                         << "\nParticipated in: " << p.second << " activities\n----------------------------------\n";
+                    shown++;
+                    break;
+                }
+            }
+        }
+        if (shown == 0)
+            cout << "No members participated in classes in this month.\n";
+    }
+    void revenueTracking(const vector<Subscription> &subscriptions)
+    {
+        map<string, double> profit; // month in "YYYY-MM" : revenue
+
+        for (const auto &a : subscriptions)
+        {
+            if (!a.active)
+                continue; // skip inactive
+
+            int durationMonths = 0;
+            if (a.period == "Monthly")
+                durationMonths = 1;
+            else if (a.period == "3 months")
+                durationMonths = 3;
+            else if (a.period == "6 months")
+                durationMonths = 6;
+            else if (a.period == "Yearly")
+                durationMonths = 12;
+            else
+                continue; // unknown period, skip
+
+            double monthlyRevenue = a.price / durationMonths;
+
+            // Parse start year and month
+            string startYM = time_t_to_string(a.startDate).substr(0, 7); // "YYYY-MM"
+            int year = stoi(startYM.substr(0, 4));
+            int month = stoi(startYM.substr(5, 2));
+
+            for (int i = 0; i < durationMonths; i++)
+            {
+                // Build month string
+                string ym = to_string(year) + "-" + (month < 10 ? "0" : "") + to_string(month);
+                profit[ym] += monthlyRevenue;
+
+                // Advance to next month
+                month++;
+                if (month > 12)
+                {
+                    month = 1;
+                    year++;
+                }
+            }
+        }
+        cout << "Monthly Revenue Report:\n";
+        cout << "-----------------------\n";
+        cout << fixed << setprecision(2);
+        for (const auto &[month, revenue] : profit)
+        {
+            cout << "Month " << month << ": $" << revenue << "\n";
+        }
+    }
 };
 #endif
