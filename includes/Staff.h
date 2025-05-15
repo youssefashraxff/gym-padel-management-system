@@ -19,123 +19,118 @@ public:
     string id;
     string role;
 
-    void searchMemberInfo(vector<Member> &members)
+    void showProfile()
+    {
+        cout << "\n[Profile]\n";
+        cout << "ID: " << id << "\n";
+        cout << "Name: " << name << "\n";
+        cout << "Username: " << username << "\n";
+        cout << "Role: " << role << "\n";
+        cout << "----------------------------------\n";
+    }
+};
+class Coach : public Staff
+{
+public:
+    Coach() {}
+    Coach(const Staff &s)
+    {
+        id = s.id;
+        name = s.name;
+        username = s.username;
+        password = s.password;
+        role = s.role;
+    }
+    void searchMemberInfo(unordered_map<string, Member *> membersUsername)
     {
         string username;
         cout << "Enter member username: ";
         cin >> username;
-        bool found = false;
-        cout << members.size();
-        for (int i = 0; i < members.size(); i++)
+
+        if (membersUsername.count(username))
         {
-            if (members[i].username == username)
-            {
-                cout << "Displaying member info:\n";
-                members[i].showProfile();
-                found = true;
-                break;
-            }
+            membersUsername[username]->showProfile();
         }
-        if (found == false)
+        else
         {
-            cout << "Member not found." << endl;
+            cout << "Member not found.\n";
         }
     }
-    void viewClasses(vector<Class> &classes)
+    void viewClasses(unordered_map<string, stack<Class *>> classesByCoachID, unordered_map<string, Member> membersID)
     {
-        int size = classes.size();
-        for (int i = 0; i < size; i++)
+        stack tempClasses = classesByCoachID[id];
+        if (tempClasses.empty())
         {
-            cout << "Class ID: " << classes[i].id << endl;
-            cout << "Type: " << classes[i].type << endl;
-            cout << "Coach: " << classes[i].coachName << endl;
-            cout << "Capacity: " << classes[i].capacity << endl;
-            cout << "Date & Time: " << classes[i].dayTime << endl;
-            cout << "Enrolled Members: ";
-            if (classes[i].memberIDs.empty())
+            cout << "No classes available.\n";
+            return;
+        }
+        cout << "\n[Classes]\n";
+        while (!tempClasses.empty())
+        {
+            Class *tempClass = tempClasses.top();
+            tempClass->showClass(membersID);
+            tempClass->showWaitlist(membersID);
+            cout << "----------------------------------\n";
+            tempClasses.pop();
+        }
+        }
+    void removeClass(unordered_map<string, Class> &classesID)
+    {
+        string classID;
+        bool isExist;
+        do
+        {
+            isExist = false;
+            cout << "Enter Class ID to remove (e.g : CL004): ";
+            cin >> classID;
+            if (classesID.count(classID))
             {
-                cout << "None" << endl;
+                classesID.erase(classID);
+                cout << "Class has been removed successfully\n";
             }
             else
             {
-                int s = classes[i].memberIDs.size();
-                for (auto it : classes[i].memberIDs)
-                {
-                    cout << it << " ";
-                }
-                cout << endl;
+                cout << "Class ID not found.\n";
+                isExist = true;
             }
-            cout << "Waitlist: ";
-            if (classes[i].waitlist.empty())
-            {
-                cout << "None" << endl;
-            }
-            else
-            {
-                queue<string> copy = classes[i].waitlist;
-                while (!copy.empty())
-                {
-                    cout << copy.front() << " ";
-                    copy.pop();
-                }
-                cout << endl;
-            }
-            cout << "------------------------" << endl;
-        }
+        } while (isExist);
     }
-    void removeClass(string id, vector<Class> &classes)
+    void addClass(unordered_map<string, Class> &classesID)
     {
-        cout << "Enter class ID you want to remove:" << endl;
-        cin >> id;
-        for (int i = 0; i < classes.size(); i++)
-        {
-            if (classes[i].id == id)
-            {
-                classes.erase(classes.begin() + i);
-                i--;
-                cout << "Class with ID" << "  " << classes[i].id << " has been removed successfully" << endl;
-                break;
-            }
-        }
-    }
-    void addClass(vector<Class> &classes)
-    {
-        string id, coachname, dayTime, type;
+        string classID, dayTime, type;
+        int capacity;
         bool idExists;
         do
         {
             idExists = false;
-            cout << "Enter Class id: ";
-            cin >> id;
-            for (int i = 0; i < classes.size(); i++)
+            cout << "Enter Class ID (e.g : CL004): ";
+            cin >> classID;
+            if (classesID.count(classID))
             {
-                if (classes[i].id == id)
-                {
-                    cout << "Class already exists. Please enter a different ID.\n";
-                    idExists = true;
-                    break;
-                }
+                cout << "Class ID already exists. Please enter a different ID.\n";
+                idExists = true;
             }
         } while (idExists);
         cin.ignore();
-        cout << "Enter coach name: ";
-        getline(cin, coachname);
 
-        cout << "Enter the type of class: ";
-        getline(cin, type);
+        cout << "\nEnter the type of class: ";
+        cin >> type;
 
-        cout << "Enter the day and time: ";
-        getline(cin, dayTime);
+        cout << "\nEnter the day and time (DD-MM-YYYY HH:MM): ";
+        cin >> dayTime;
 
-        Class temp;
-        temp.id = id;
-        temp.coachName = coachname;
-        temp.type = type;
-        temp.capacity = 0;
-        temp.dayTime = string_to_time_t(dayTime);
-        classes.push_back(temp);
+        cout << "\nEnter class capacity: ";
+        cin >> capacity;
+
+        Class temp(type, classID, this->name, this->id, capacity, string_to_time_t(dayTime));
+        classesID[classID] = temp;
 
         cout << "Class has been added successfully\n";
     }
+};
+class Manager : public Staff
+{
+public:
+    // Manager Methods
 };
 #endif

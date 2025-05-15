@@ -1,6 +1,17 @@
 [
     {
         "capacity": 2,
+        "coachID": "S004",
+        "coachName": "Ali",
+        "dayTime": 1746877200,
+        "id": "CL004",
+        "memberIDs": [],
+        "type": "yoga",
+        "waitlist": []
+    },
+    {
+        "capacity": 2,
+        "coachID": "S001",
         "coachName": "Youssef",
         "dayTime": 1748530800,
         "id": "CL001",
@@ -13,6 +24,7 @@
     },
     {
         "capacity": 3,
+        "coachID": "S001",
         "coachName": "Youssef",
         "dayTime": 1748617200,
         "id": "CL002",
@@ -22,20 +34,12 @@
     },
     {
         "capacity": 3,
+        "coachID": "S004",
         "coachName": "Ali",
         "dayTime": 1748703600,
         "id": "CL003",
         "memberIDs": [],
         "type": "Zumba",
-        "waitlist": []
-    },
-    {
-        "capacity": 2,
-        "coachName": "Ali",
-        "dayTime": 1746877200,
-        "id": "CL004",
-        "memberIDs": [],
-        "type": "yoga",
         "waitlist": []
     }
 ]

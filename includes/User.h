@@ -27,43 +27,40 @@ public:
     string getUserType(const string &username)
     {
         if (username.find("staff_") == 0)
-            return "staff";
+            return "staff_";
         return "member";
     }
-    bool getMember(string u, string p)
+    bool getMember(const string &u, const string &p)
     {
-        for (const auto &[id, member] : dataManager->membersID)
+        auto it = dataManager->membersUsername.find(u);
+        if (it != dataManager->membersUsername.end() && it->second->password == p)
         {
-            if (member.username == u && member.password == p)
-            {
-                loggedInMember = member;
-                return true;
-            }
+            loggedInMember = *(it->second);
+            return true;
         }
         return false;
     }
 
-    bool getStaff(string username)
+    bool getStaff(const string &u, const string &p)
     {
-        for (int i = 0; i < dataManager->staff.size(); i++)
+        auto it = dataManager->StaffsUsername.find(u);
+        if (it != dataManager->StaffsUsername.end() && it->second.password == p)
         {
-            if (dataManager->staff.at(i).username == username)
-            {
-                loggedInStaff = dataManager->staff.at(i);
-                return true;
-            }
+            loggedInStaff = it->second;
+            return true;
         }
         return false;
     }
+
     // SIGN-IN FUNCTION
     bool signIn(const string &username, const string &password)
     {
         string role = getUserType(username);
         if (role == "staff_")
         {
-            if (getStaff(username))
+            if (getStaff(username, password))
             {
-                cout << "\nSigned in successfully." << "Welcome, " << loggedInStaff.name << "!\n";
+                cout << "\nSigned in successfully. " << "Welcome, " << loggedInStaff.role << " " << loggedInStaff.name << "!\n";
                 return true;
             }
             cout << "Invalid username or password." << endl;
@@ -142,5 +139,9 @@ public:
     Member getLoggedInMember()
     {
         return loggedInMember;
+    }
+    Staff getLoggedInStaff()
+    {
+        return loggedInStaff;
     }
 };

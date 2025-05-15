@@ -49,15 +49,12 @@ public:
         addNotification(memberID, msg);
     }
 
-    // void notifySubscriptionExpiry(const string &memberId, int daysLeft)
-    // {
-    //     if (daysLeft <= 0)
-    //         return;
-
-    //     string msg = "Subscription expires in " + to_string(daysLeft) +
-    //                  (daysLeft == 1 ? " day" : " days");
-    //     addNotification(memberId, msg);
-    // }
+    void notifySubscriptionExpiry(string &memberId, int daysLeft)
+    {
+        string msg = "Subscription expires in " + to_string(daysLeft) +
+                     (daysLeft == 1 ? " day" : " days");
+        addNotification(memberId, msg);
+    }
 
     void show(const string &memberId)
     {

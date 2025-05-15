@@ -84,6 +84,7 @@ void to_json(json &j, const Class &c)
         {"type", c.type},
         {"id", c.id},
         {"coachName", c.coachName},
+        {"coachID", c.coachId},
         {"capacity", c.capacity},
         {"memberIDs", c.memberIDs},
         {"dayTime", c.dayTime}, // store as time_t (number)
@@ -95,6 +96,7 @@ void from_json(const json &j, Class &c)
     j.at("type").get_to(c.type);
     j.at("id").get_to(c.id);
     j.at("coachName").get_to(c.coachName);
+    j.at("coachID").get_to(c.coachId);
     j.at("capacity").get_to(c.capacity);
     j.at("memberIDs").get_to(c.memberIDs);
 

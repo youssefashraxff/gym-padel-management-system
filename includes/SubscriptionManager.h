@@ -7,6 +7,7 @@
 #include <unordered_map>
 
 #include "DataManager.h"
+#include "NotificationManager.h"
 #include "Subscription.h"
 #include "Member.h"
 
@@ -26,7 +27,7 @@ public:
     SubscriptionManager(DataManager &data_manager)
         : data_manager(data_manager) {}
 
-    void load_member_subscriptions()
+    void load_member_subscriptions(Member &loggedInMember, NotificationManager &notification_manager)
     {
         for (const auto &[id, m] : data_manager.membersID)
         {
@@ -37,9 +38,13 @@ public:
                 Subscription &sub = it->second;
 
                 sub.checkActive();
+                if (sub.checkForRenewal())
+                {
+                    notification_manager.notifySubscriptionExpiry(loggedInMember.id, (sub.endDate - time(nullptr)) / (60 * 60 * 24));
+                }
                 Subscription::markIdAsUsed(sub.id);
 
-                memberSubscription[id] = sub;
+                memberSubscription[m.id] = sub;
             }
         }
     }
