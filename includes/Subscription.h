@@ -97,6 +97,15 @@ public:
             active = false;
         }
     }
+    bool checkForRenewal()
+    {
+        time_t currentTime = time(nullptr);
+        if (difftime(endDate, currentTime) <= 3 && active == true)
+        {
+            return true;
+        }
+        return false;
+    }
     static void markIdAsUsed(int existingId)
     {
         usedIds.insert(existingId);

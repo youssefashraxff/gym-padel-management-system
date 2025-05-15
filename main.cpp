@@ -25,209 +25,190 @@ int main()
 
     ClassManager classManager(dataManager);
     CourtBookingManager courtBookingManager(dataManager);
-    SubscriptionManager subscriptionManager(dataManager);
     NotificationManager notificationManager(dataManager);
+    SubscriptionManager subscriptionManager(dataManager);
 
-    subscriptionManager.load_member_subscriptions();
     classManager.load_member_classes();
     courtBookingManager.load_member_court_bookings();
     notificationManager.load_member_notifications();
 
-    // Staff s;
-    // s.addClass(dataManager.classes);
     User temp(dataManager);
     temp.login();
-    Member loggedInMember = temp.getLoggedInMember();
 
-    bool running = true;
-    while (running)
+    if (!temp.getLoggedInMember().id.empty())
     {
-        cout << "\n[1] Gym\n[2] Padel\n[0] Exit\n";
-        cout << "\nEnter Choice\n";
-        int menuChoice;
-        cin >> menuChoice;
-        switch (menuChoice)
+        // A member is logged in
+        Member loggedInMember = temp.getLoggedInMember();
+        subscriptionManager.load_member_subscriptions(loggedInMember, notificationManager);
+        bool running = true;
+        while (running)
         {
-        case 1:
-        {
-            // Gym Menu
-            bool secondRunning = true;
-            while (secondRunning)
+            cout << "\n[1] Gym\n[2] Padel\n[0] Exit\n";
+            cout << "\nEnter Choice\n";
+            int menuChoice;
+            cin >> menuChoice;
+            switch (menuChoice)
             {
-                cout << "\n[1] View Profile\n";
-                cout << "[2] View Subscription\n";
-                cout << "[3] View Available Classes\n";
-                cout << "[4] Cancel Pending Classes\n";
-                cout << "[5] View Workout History\n";
-                cout << "[6] View Notifications\n";
-                cout << "[0] Logout / Exit\n";
+            case 1:
+            {
+                // Gym Menu
+                bool secondRunning = true;
+                while (secondRunning)
+                {
+                    cout << "\n[1] View Profile\n";
+                    cout << "[2] View Subscription\n";
+                    cout << "[3] View Available Classes\n";
+                    cout << "[4] Cancel Pending Classes\n";
+                    cout << "[5] View Workout History\n";
+                    cout << "[6] View Notifications\n";
+                    cout << "[0] Logout / Exit\n";
 
-                int choice;
-                cout << "\nEnter your choice: ";
-                cin >> choice;
+                    int choice;
+                    cout << "\nEnter your choice: ";
+                    cin >> choice;
 
-                switch (choice)
-                {
-                case 1:
-                {
-                    cout << "\n\nTest 1\n\n";
-                    loggedInMember.showProfile();
-                    break;
-                }
-                case 2:
-                {
-                    cout << "\n\nTest 2\n\n";
-                    subscriptionManager.showSubscriptionDetails(loggedInMember);
-                    break;
-                }
-                case 3:
-                {
-                    for (auto it : dataManager.getAvailableClasses())
+                    switch (choice)
                     {
-                        cout << "\nID: " << it.id << "\n";
-                        cout << "Class : " << it.type << "\n";
-                        cout << "Date: " << time_t_to_string(it.dayTime) << "\n";
-                        cout << "Coach : " << it.coachName << "\n";
+                    case 1:
+                    {
+                        cout << "\n\nTest 1\n\n";
+                        loggedInMember.showProfile();
+                        break;
                     }
-                    cout << "\nDo you want to book a class? (yes or no)\n";
-                    string choice_sec;
-                    cin >> choice_sec;
-
-                    if (choice_sec == "yes")
+                    case 2:
                     {
-                        if (subscriptionManager.getSubscription(loggedInMember.id).active == true)
+                        cout << "\n\nTest 2\n\n";
+                        subscriptionManager.showSubscriptionDetails(loggedInMember);
+                        break;
+                    }
+                    case 3:
+                    {
+                        for (auto it : dataManager.getAvailableClasses())
                         {
-                            cout << "\n Enter class ID: ";
-                            string classID;
-                            cin >> classID;
-                            Class chosenClass = dataManager.getClassByID(classID);
+                            cout << "\nID: " << it.id << "\n";
+                            cout << "Class : " << it.type << "\n";
+                            cout << "Date: " << time_t_to_string(it.dayTime) << "\n";
+                            cout << "Coach : " << it.coachName << "\n";
+                        }
+                        cout << "\nDo you want to book a class? (yes or no)\n";
+                        string choice_sec;
+                        cin >> choice_sec;
 
-                            chosenClass.addMember(loggedInMember.id);
-                            classManager.addWorkout(loggedInMember.id, &chosenClass);
-                            dataManager.classesID[chosenClass.id] = chosenClass;
+                        if (choice_sec == "yes")
+                        {
+                            if (subscriptionManager.getSubscription(loggedInMember.id).active == true)
+                            {
+                                cout << "\n Enter class ID: ";
+                                string classID;
+                                cin >> classID;
+                                Class chosenClass = dataManager.getClassByID(classID);
+
+                                chosenClass.addMember(loggedInMember.id);
+                                classManager.addWorkout(loggedInMember.id, &chosenClass);
+                                dataManager.classesID[chosenClass.id] = chosenClass;
+                            }
+                            else
+                            {
+                                subscriptionManager.showSubscriptionDetails(loggedInMember);
+                            }
                         }
                         else
                         {
-                            subscriptionManager.showSubscriptionDetails(loggedInMember);
+                            // logic
                         }
+                        break;
                     }
-                    else
+                    case 4:
                     {
-                        // logic
+                        classManager.show_member_pending_classes(loggedInMember.id);
+                        cout << "Enter class Id you want to cancel: ";
+                        string classId_forCancel;
+                        cin >> classId_forCancel;
+
+                        Class chosenClass = dataManager.getClassByID(classId_forCancel);
+                        notificationManager.notify_Latest_in_waitinglist(chosenClass.waitlist.front(), chosenClass);
+                        chosenClass.removeMember(loggedInMember.id);
+                        classManager.removeWorkout(loggedInMember.id, &chosenClass);
+                        dataManager.classesID[chosenClass.id] = chosenClass;
+
+                        break;
                     }
-                    break;
+                    case 5:
+                    {
+                        classManager.show_member_history(loggedInMember.id);
+                        break;
+                    }
+                    case 6:
+                    {
+                        notificationManager.show(loggedInMember.id);
+                    }
+                    case 0:
+                    {
+                        secondRunning = false;
+                        break;
+                    }
+                    }
                 }
-                case 4:
-                {
-                    classManager.show_member_pending_classes(loggedInMember.id);
-                    cout << "Enter class Id you want to cancel: ";
-                    string classId_forCancel;
-                    cin >> classId_forCancel;
-
-                    Class chosenClass = dataManager.getClassByID(classId_forCancel);
-                    notificationManager.notify_Latest_in_waitinglist(chosenClass.waitlist.front(), chosenClass);
-                    chosenClass.removeMember(loggedInMember.id);
-                    classManager.removeWorkout(loggedInMember.id, &chosenClass);
-                    dataManager.classesID[chosenClass.id] = chosenClass;
-
-                    break;
-                }
-                case 5:
-                {
-                    classManager.show_member_history(loggedInMember.id);
-                    break;
-                }
-                case 6:
-                {
-                    notificationManager.show(loggedInMember.id);
-                }
-                case 0:
-                {
-                    secondRunning = false;
-                    break;
-                }
-                }
+                break;
             }
-            break;
-        }
-        case 2:
-            // Padel Menu
-            break;
-        case 0:
-            running = false;
-            break;
-        default:
-            break;
+            case 2:
+                // Padel Menu
+                break;
+            case 0:
+                running = false;
+                break;
+            default:
+                break;
+            }
         }
     }
-    /*bool running = true;
-    while (running)
+    else if (!temp.getLoggedInStaff().id.empty() && temp.getLoggedInStaff().role == "Coach")
     {
-        cout << "\n[1] View Profile\n";
-        cout << "[2] View Subscription\n";
-        cout << "[3] View Available Classes\n";
-        cout << "[4] View Available Padel Courts\n";
-        cout << "[5] View Court Bookings\n";
-        cout << "[6] View Workout History\n";
-        cout << "[7] View Notifications\n";
-        cout << "[0] Logout / Exit\n";
+        // A staff (coach or manager) is logged in
+        Coach loggedInCoach(temp.getLoggedInStaff());
 
-        int choice;
-        cout << "\nEnter your choice: ";
-        cin >> choice;
-        switch (choice)
+        bool secondRunning = true;
+        while (secondRunning)
         {
-        case 1:
-            loggedInMember.showProfile();
-            break;
-        case 2:
-            subscriptionManager.showSubscriptionDetails(loggedInMember);
-            break;
-        case 3:
-            cout << "\n[Available Classes]\n";
-            for (auto c : dataManager.classes)
+            cout << "\n[1] View Profile\n";
+            cout << "[2] Search Member Info\n";
+            cout << "[3] View Assigned Classes\n";
+            cout << "[4] Add Class\n";
+            cout << "[5] Remove Class\n";
+            cout << "[0] Logout / Exit\n";
+
+            int choice;
+            cout << "\nEnter your choice: ";
+            cin >> choice;
+
+            switch (choice)
             {
-                cout << "\nClass : " << c.type << "\n";
-                cout << "Time: " << c.dayTime << "\n";
-                cout << "Coach : " << c.coachName << "\n";
-            }
-            break;
-        case 4:
-            // cout<<"\n[Available Padel Courts]\n";
-            // for(auto c : dataManager.courts){
-            //     cout<<"Court ID: "<<c.getId()<<endl;
-            //     cout<<"Court Type: "<<c.getType()<<endl;
-            //     cout<<"Court Availability: "<<(c.isAvailable() ? "Available" : "Not Available")<<endl;
-            // }
-            break;
-        case 5:
-        {
-            cout << "\n[Your Court Bookings]\n";
-            stack<CourtBooking> bookings = courtBookingManager.getBookingInfo(loggedInMember.id);
-            while (!bookings.empty())
+            case 1:
+                loggedInCoach.showProfile();
+                break;
+            case 2:
+                loggedInCoach.searchMemberInfo(dataManager.membersUsername);
+                break;
+            case 3:
             {
-                CourtBooking booking = bookings.top();
-                bookings.pop();
-                cout << "Court ID: " << booking.courtID << "\n";
-                cout << "Booking Time: " << booking.time << "\n";
-                cout << "Booking Date: " << time_t_to_string(booking.date) << "\n";
+                loggedInCoach.viewClasses(dataManager.classesByCoachID, dataManager.membersID);
+                break;
             }
-            break;
+            case 4:
+                loggedInCoach.addClass(dataManager.classesID);
+                break;
+            case 5:
+                loggedInCoach.removeClass(dataManager.classesID);
+                break;
+            case 0:
+                secondRunning = false;
+                break;
+            default:
+                cout << "Invalid choice.\n";
+                break;
+            }
         }
-        case 6:
-        {
-            classManager.show_member_history(loggedInMember.id);
-            break;
-        }
-        case 7:
-        {
-            // notificationManager.show(loggedInMember.id);
-            break;
-        }
-        case 0:
-            running = false;
-        }
-    }*/
-    // notificationManager.saveAllNotifications();
+    }
+
     dataManager.saveData();
 }

@@ -2,6 +2,7 @@
 #define DATAMANAGER_H
 
 #include <vector>
+#include <stack>
 #include "FileHandler.h"
 #include "Member.h"
 #include "Staff.h"
@@ -26,12 +27,14 @@ private:
     FileHandler<Notification> notificationHandler;
 
 public:
-    vector<Staff> staff;
     vector<Court> courts;
     vector<Notification> notifications;
     unordered_map<int, Subscription> subscriptionsID;
+    unordered_map<string, Staff> StaffsUsername;
     unordered_map<string, Member> membersID;
+    unordered_map<string, Member *> membersUsername;
     unordered_map<string, Class> classesID;
+    unordered_map<string, stack<Class *>> classesByCoachID;
     vector<CourtBooking> courtBookings;
 
     DataManager() : memberHandler("files/Members.json"),
@@ -48,14 +51,19 @@ public:
         {
             vector<Member> members = memberHandler.read();
             loadMembers(members);
-            staff = staffHandler.read();
-            courts = courtHandler.read();
-            notifications = notificationHandler.read();
+            vector<Staff> Staffs = staffHandler.read();
+            loadMembers(Staffs);
             vector<Class> classes = classHandler.read();
+            sort(classes.begin(), classes.end(), [](const Class &a, const Class &b)
+                 {
+                     return a.dayTime > b.dayTime; // newest first if you want newest on top
+                 });
             loadClasses(classes);
             vector<Subscription> subscriptions = subscriptionHandler.read();
             loadSubscriptions(subscriptions);
             courtBookings = courtBookingHandler.read();
+            notifications = notificationHandler.read();
+            courts = courtHandler.read();
         }
         catch (const nlohmann::json::exception &e)
         {
@@ -68,7 +76,7 @@ public:
         try
         {
             memberHandler.write(getMembersAsVector());
-            staffHandler.write(staff);
+            staffHandler.write(getStaffsAsVector());
             courtHandler.write(courts);
             notificationHandler.write(notifications);
             classHandler.write(getClassesAsVector());
@@ -90,10 +98,18 @@ public:
     }
     void loadMembers(const vector<Member> &membersList)
     {
-        for (const auto &member : membersList)
+        for (const auto &m : membersList)
         {
-            membersID[member.id] = member;
-            Member::usedIds.insert(member.id);
+            membersID[m.id] = m;
+            membersUsername[m.username] = &membersID[m.id];
+            Member::usedIds.insert(m.id);
+        }
+    }
+    void loadMembers(const vector<Staff> &StaffsList)
+    {
+        for (const auto &s : StaffsList)
+        {
+            StaffsUsername[s.username] = s;
         }
     }
     void loadClasses(const vector<Class> &classList)
@@ -101,6 +117,7 @@ public:
         for (const auto &c : classList)
         {
             classesID[c.id] = c;
+            classesByCoachID[c.coachId].push(&classesID[c.id]);
         }
     }
     vector<Subscription> getSubscriptionsAsVector() const
@@ -120,6 +137,15 @@ public:
     {
         vector<Member> result;
         for (const auto &pair : membersID)
+        {
+            result.push_back(pair.second);
+        }
+        return result;
+    }
+    vector<Staff> getStaffsAsVector() const
+    {
+        vector<Staff> result;
+        for (const auto &pair : StaffsUsername)
         {
             result.push_back(pair.second);
         }
