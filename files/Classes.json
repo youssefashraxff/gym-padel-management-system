@@ -16,8 +16,7 @@
         "dayTime": 1748530800,
         "id": "CL001",
         "memberIDs": [
-            "M001",
-            "M195"
+            "M001"
         ],
         "type": "Yoga",
         "waitlist": []
@@ -28,17 +27,23 @@
         "coachName": "Youssef",
         "dayTime": 1748617200,
         "id": "CL002",
-        "memberIDs": [],
+        "memberIDs": [
+            "M019",
+            "M001"
+        ],
         "type": "Yoga",
         "waitlist": []
     },
     {
-        "capacity": 3,
+        "capacity": 2,
         "coachID": "S004",
         "coachName": "Ali",
         "dayTime": 1748703600,
         "id": "CL003",
-        "memberIDs": [],
+        "memberIDs": [
+            "M195",
+            "M001"
+        ],
         "type": "Zumba",
         "waitlist": []
     }

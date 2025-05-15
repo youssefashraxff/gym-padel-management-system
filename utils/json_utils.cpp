@@ -114,14 +114,14 @@ void to_json(json &j, const Court &c)
     j = json{
         {"id", c.id},
         {"location", c.location},
-        {"timeSlots", c.timeSlots}};
+        {"daySlots", c.daySlots}};
 }
 
 void from_json(const json &j, Court &c)
 {
     j.at("id").get_to(c.id);
     j.at("location").get_to(c.location);
-    j.at("timeSlots").get_to(c.timeSlots);
+    j.at("daySlots").get_to(c.daySlots);
 }
 
 // Court Booking
@@ -132,8 +132,8 @@ void to_json(json &j, const CourtBooking &c)
         {"courtID", c.courtID},
         {"memberID", c.memberID},
         {"location", c.location},
-        {"date", time_t_to_string(c.date)},
-        {"time", c.time}};
+        {"date", c.date},
+        {"time", c.bookingTime}};
 }
 
 void from_json(const json &j, CourtBooking &c)
@@ -141,8 +141,8 @@ void from_json(const json &j, CourtBooking &c)
     c.courtID = j.at("courtID").get<std::string>();
     c.memberID = j.at("memberID").get<std::string>();
     c.location = j.at("location").get<std::string>();
-    c.date = string_to_time_t(j.at("date").get<std::string>());
-    c.time = j.at("time").get<std::string>();
+    c.date = j.at("date").get<std::string>();
+    c.bookingTime = j.at("time").get<std::string>();
 }
 
 // Notification

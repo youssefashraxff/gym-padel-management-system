@@ -101,20 +101,17 @@ int main()
                                 cout << "\n Enter class ID: ";
                                 string classID;
                                 cin >> classID;
-                                Class chosenClass = dataManager.getClassByID(classID);
+                                Class *chosenClass = &dataManager.classesID[classID];
 
-                                chosenClass.addMember(loggedInMember.id);
-                                classManager.addWorkout(loggedInMember.id, &chosenClass);
-                                dataManager.classesID[chosenClass.id] = chosenClass;
+                                if (chosenClass->addMember(loggedInMember.id))
+                                {
+                                    classManager.addWorkout(loggedInMember.id, chosenClass);
+                                }
                             }
                             else
                             {
                                 subscriptionManager.showSubscriptionDetails(loggedInMember);
                             }
-                        }
-                        else
-                        {
-                            // logic
                         }
                         break;
                     }
@@ -152,8 +149,48 @@ int main()
                 break;
             }
             case 2:
-                // Padel Menu
-                break;
+            {
+                bool secondRunning = true;
+                while (secondRunning)
+                {
+                    cout << "\n[1] Show Available Courts\n";
+                    cout << "[2] Book Court\n";
+                    cout << "[3] Show Court Bookings\n";
+                    cout << "[4] Reschedule Slot\n";
+                    cout << "[5] Cancel Slot\n";
+                    cout << "[0] Logout / Exit\n";
+
+                    int choice;
+                    cout << "\nEnter your choice: ";
+                    cin >> choice;
+
+                    switch (choice)
+                    {
+                    case 1:
+                        courtBookingManager.showAvailability(dataManager.courts);
+                        break;
+                    case 2:
+                        courtBookingManager.bookSlot(dataManager.courts, loggedInMember.id);
+                        break;
+                    case 3:
+                        courtBookingManager.showCourtBookings(loggedInMember.id);
+                        break;
+                    case 4:
+
+                        break;
+                    case 5:
+                        courtBookingManager.cancelCourt(dataManager.courts, loggedInMember.id);
+                        break;
+                    case 0:
+                        secondRunning = false;
+                        break;
+                    default:
+                        cout << "Invalid choice. Try again.\n";
+                        break;
+                    }
+                }
+            }
+            break;
             case 0:
                 running = false;
                 break;
@@ -209,6 +246,12 @@ int main()
             }
         }
     }
-
+    else if (!temp.getLoggedInStaff().id.empty() && temp.getLoggedInStaff().role == "Manager")
+    {
+        Manager loggedInManager(temp.getLoggedInStaff());
+        cout << "\nGenerate Report\n";
+        loggedInManager.topActiveMembersMonthly(dataManager.getMembersAsVector(), dataManager.getClassesAsVector(), 3, "2025-08");
+        loggedInManager.revenueTracking(dataManager.getSubscriptionsAsVector());
+    }
     dataManager.saveData();
 }
