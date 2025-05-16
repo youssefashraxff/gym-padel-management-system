@@ -12,7 +12,7 @@ using namespace std;
 class User
 {
 private:
-    DataManager *dataManager;
+    DataManager dataManager;
 
     Staff loggedInStaff;
     Member loggedInMember;
@@ -20,7 +20,7 @@ private:
 public:
     User(DataManager &d)
     {
-        dataManager = &d;
+        dataManager = d;
     }
 
     // IDENTIFING THE ROLE FROM USERNAME
@@ -32,8 +32,8 @@ public:
     }
     bool getMember(const string &u, const string &p)
     {
-        auto it = dataManager->membersUsername.find(u);
-        if (it != dataManager->membersUsername.end() && it->second->password == p)
+        auto it = dataManager.membersUsername.find(u);
+        if (it != dataManager.membersUsername.end() && it->second->password == p)
         {
             loggedInMember = *(it->second);
             return true;
@@ -43,8 +43,8 @@ public:
 
     bool getStaff(const string &u, const string &p)
     {
-        auto it = dataManager->StaffsUsername.find(u);
-        if (it != dataManager->StaffsUsername.end() && it->second.password == p)
+        auto it = dataManager.StaffsUsername.find(u);
+        if (it != dataManager.StaffsUsername.end() && it->second.password == p)
         {
             loggedInStaff = it->second;
             return true;
@@ -99,7 +99,7 @@ public:
         cin >> age;
         Member temp(username, password, name, age, -1);
         loggedInMember = temp;
-        dataManager->membersID[loggedInMember.id] = loggedInMember;
+        dataManager.membersID[loggedInMember.id] = loggedInMember;
         cout << "\nSigned up successfully. Welcome, " << loggedInMember.name << "!\n";
     }
 
