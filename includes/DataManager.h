@@ -34,7 +34,7 @@ public:
     unordered_map<string, Member> membersID;
     unordered_map<string, Member *> membersUsername;
     unordered_map<string, Class> classesID;
-    unordered_map<string, stack<Class *>> classesByCoachID;
+    unordered_map<string, vector<Class *>> classesByCoachID;
     unordered_map<string, CourtBooking> courtBookings;
     // vector<CourtBooking> courtBookings;
 
@@ -127,7 +127,7 @@ public:
         for (const auto &c : classList)
         {
             classesID[c.id] = c;
-            classesByCoachID[c.coachId].push(&classesID[c.id]);
+            classesByCoachID[c.coachId].push_back(&classesID[c.id]);
         }
     }
     vector<Subscription> getSubscriptionsAsVector() const

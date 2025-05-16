@@ -56,22 +56,20 @@ public:
             cout << "Member not found.\n";
         }
     }
-    void viewClasses(unordered_map<string, stack<Class *>> classesByCoachID, unordered_map<string, Member> membersID)
+    void viewClasses(unordered_map<string, vector<Class *>> classesByCoachID, unordered_map<string, Member> membersID)
     {
-        stack tempClasses = classesByCoachID[id];
+        vector tempClasses = classesByCoachID[id];
         if (tempClasses.empty())
         {
             cout << "No classes available.\n";
             return;
         }
         cout << "\n[Classes]\n";
-        while (!tempClasses.empty())
+        for (Class *c : tempClasses)
         {
-            Class *tempClass = tempClasses.top();
-            tempClass->showClass(membersID);
-            tempClass->showWaitlist(membersID);
+            c->showClass(membersID);
+            c->showWaitlist(membersID);
             cout << "----------------------------------\n";
-            tempClasses.pop();
         }
     }
     void removeClass(unordered_map<string, Class> &classesID)
