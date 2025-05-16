@@ -15,7 +15,7 @@ using namespace std;
 class CourtBooking
 {
 public:
-    string generateRandomMemberID()
+    string generateRandomBookingID()
     {
         static bool seeded = false;
         if (!seeded)

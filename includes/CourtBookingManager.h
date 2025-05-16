@@ -131,7 +131,7 @@ public:
                             cout << "Successfully booked " << time << " at " << location << " (Court " << courts[i].id << ") on " << date << endl;
                             slotBooked = true;
                             CourtBooking cb;
-                            cb.bookingID = cb.generateRandomMemberID();
+                            cb.bookingID = cb.generateRandomBookingID();
                             cb.courtID = courts[i].id;
                             cb.date = date;
                             cb.location = location;

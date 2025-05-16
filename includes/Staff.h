@@ -95,9 +95,20 @@ public:
     }
     void addClass(unordered_map<string, Class> &classesID)
     {
+        // Check if today's date is the 1st of the month
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+
+        if (ltm->tm_mday != 1)
+        {
+            cout << "You can only add classes on the 1st day of the month.\n";
+            return;
+        }
+
         string classID, dayTime, type;
         int capacity;
         bool idExists;
+
         do
         {
             idExists = false;
@@ -123,7 +134,7 @@ public:
         Class temp(type, classID, this->name, this->id, capacity, string_to_time_t(dayTime));
         classesID[classID] = temp;
 
-        cout << "Class has been added successfully\n";
+        cout << "Class has been added successfully.\n";
     }
 };
 class Manager : public Staff
