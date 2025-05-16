@@ -14,7 +14,7 @@
 #include "includes/Subscription.h"
 #include "includes/CourtBooking.h"
 #include "includes/Court.h"
-// #include "includes/Staff.h"
+
 #include <stack>
 using namespace std;
 
@@ -249,9 +249,36 @@ int main()
     else if (!temp.getLoggedInStaff().id.empty() && temp.getLoggedInStaff().role == "Manager")
     {
         Manager loggedInManager(temp.getLoggedInStaff());
-        cout << "\nGenerate Report\n";
-        loggedInManager.topActiveMembersMonthly(dataManager.getMembersAsVector(), dataManager.getClassesAsVector(), 3, "2025-08");
-        loggedInManager.revenueTracking(dataManager.getSubscriptionsAsVector());
+        cout << "[1] View Profile\n";
+        cout << "[2] View Active Members Monthly\n";
+        cout << "[3] Revenue Tracking\n";
+
+        int choice;
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            loggedInManager.showProfile();
+            break;
+        case 2:
+        {
+            cout << "Enter the month (YYYY-MM): ";
+            string targetMonth;
+            cin >> targetMonth;
+            int N;
+            cout << "Enter the number of top active members to display: ";
+            cin >> N;
+            loggedInManager.topActiveMembersMonthly(dataManager.getMembersAsVector(), dataManager.getClassesAsVector(), N, targetMonth);
+            break;
+        }
+        case 3:
+            loggedInManager.revenueTracking(dataManager.getSubscriptionsAsVector());
+            break;
+        default:
+            cout << "Invalid choice.\n";
+            break;
+        }
     }
     dataManager.saveData();
 }
