@@ -63,7 +63,7 @@ public:
             vector<Subscription> subscriptions = subscriptionHandler.read();
             loadSubscriptions(subscriptions);
             vector<CourtBooking> courtBookings = courtBookingHandler.read();
-
+            loadBookings(courtBookings);
             notifications = notificationHandler.read();
             courts = courtHandler.read();
         }

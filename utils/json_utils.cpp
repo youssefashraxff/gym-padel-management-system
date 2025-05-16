@@ -133,7 +133,8 @@ void to_json(json &j, const CourtBooking &c)
         {"memberID", c.memberID},
         {"location", c.location},
         {"date", c.date},
-        {"time", c.bookingTime}};
+        {"time", c.bookingTime},
+        {"bookingID", c.bookingID}};
 }
 
 void from_json(const json &j, CourtBooking &c)
@@ -143,6 +144,7 @@ void from_json(const json &j, CourtBooking &c)
     c.location = j.at("location").get<std::string>();
     c.date = j.at("date").get<std::string>();
     c.bookingTime = j.at("time").get<std::string>();
+    c.bookingID = j.at("bookingID").get<std::string>();
 }
 
 // Notification

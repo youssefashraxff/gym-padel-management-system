@@ -176,7 +176,7 @@ int main()
                         courtBookingManager.showCourtBookings(loggedInMember.id);
                         break;
                     case 4:
-
+                        courtBookingManager.rescheduleSlot(dataManager.courts, loggedInMember.id);
                         break;
                     case 5:
                         courtBookingManager.cancelCourt(dataManager.courts, loggedInMember.id);

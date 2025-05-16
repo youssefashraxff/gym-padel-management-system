@@ -8,8 +8,6 @@
 #include "Court.h"
 
 #include <unordered_map>
-#include "stack"
-
 #pragma once
 using namespace std;
 
@@ -170,7 +168,7 @@ public:
 
         for (CourtBooking cb : bookings)
         {
-            if (id == cb.bookingID && checkCancellationTime(cb.date, cb.bookingTime))
+            if (id == cb.bookingID && check3hoursDiff(cb.date, cb.bookingTime))
             {
                 data_manager.courtBookings.erase(id);
 
@@ -207,7 +205,7 @@ public:
         }
     }
 
-    bool checkCancellationTime(string date, string myTime)
+    bool check3hoursDiff(string date, string myTime)
     {
         time_t bookingTime = string_to_time_t(date + " " + myTime);
         time_t now = time(nullptr);
@@ -216,7 +214,7 @@ public:
 
         if (hoursDiff < 3.0)
         {
-            cout << "Cannot cancel - must cancel at least 3 hours before.\n";
+            cout << "Cannot Cancel or Reschedule- must be at least 3 hours before.\n";
             return false;
         }
         if (hoursDiff < 0)
@@ -227,70 +225,79 @@ public:
         return true;
     }
 
-    void rescheduleSlot(vector<Court> &courts, string oldDate, string oldTime, string newDate, string newTime)
+    void rescheduleSlot(vector<Court>& courts, string memberID)
     {
-        string courtID;
-        cout << "Enter court ID to reschedule: ";
-        cin >> courtID;
+        showCourtBookings(memberID);
 
-        time_t now = time(nullptr);
-        time_t oldBooking = string_to_time_t(oldDate + " " + oldTime);
-        time_t newBooking = string_to_time_t(newDate + " " + newTime);
+        cout << "Enter the Booking ID you want to reschedule: ";
+        string bookingID;
+        cin >> bookingID;
 
-        double hoursDiff = difftime(oldBooking, now) / 3600.0;
-        cout << "Hours until current booking: " << hoursDiff << endl;
+        vector<CourtBooking> bookings = getBookingInfo(memberID);
+        CourtBooking* targetBooking = nullptr;
 
-        if (hoursDiff < 3.0)
+        for (CourtBooking& cb : bookings)
         {
-            cout << "Cannot reschedule - must be at least 3 hours before booking time.\n";
+            if (cb.bookingID == bookingID)
+            {
+                targetBooking = &cb;
+                break;
+            }
+        }
+
+        if (!targetBooking)
+        {
+            cout << "Booking ID not found.\n";
             return;
         }
 
-        bool foundCourt = false;
-        bool rescheduled = false;
-
-        for (Court &court : courts)
+        if (!check3hoursDiff(targetBooking->date, targetBooking->bookingTime))
         {
-            if (court.id == courtID)
+            return;
+        }
+
+        string newDate, newTime;
+        cout << "Enter new date (YYYY-MM-DD): ";
+        cin >> newDate;
+        cout << "Enter new time (HH:MM): ";
+        cin >> newTime;
+
+        for (Court& court : courts)
+        {
+            if (court.id == targetBooking->courtID)
             {
-                foundCourt = true;
-
-                if (court.daySlots[oldDate].count(oldTime) &&
-                    court.daySlots[oldDate][oldTime])
+                if (court.daySlots[newDate].count(newTime) && !court.daySlots[newDate][newTime])
                 {
+                    court.daySlots[targetBooking->date][targetBooking->bookingTime] = false;
+                    court.daySlots[newDate][newTime] = true;
 
-                    if (court.daySlots[newDate].count(newTime) &&
-                        !court.daySlots[newDate][newTime])
+                    targetBooking->date = newDate;
+                    targetBooking->bookingTime = newTime;
+
+                    data_manager.courtBookings[bookingID] = *targetBooking;
+                    for (CourtBooking& cb : memberCourtBookings[memberID])
                     {
-
-                        court.daySlots[oldDate][oldTime] = false;
-                        court.daySlots[newDate][newTime] = true;
-
-                        cout << "Successfully rescheduled Court " << courtID
-                             << " from " << oldDate << " " << oldTime
-                             << " to " << newDate << " " << newTime << endl;
-                        rescheduled = true;
+                        if (cb.bookingID == bookingID)
+                        {
+                            cb = *targetBooking;
+                            break;
+                        }
                     }
-                    else
-                    {
-                        cout << "New time slot " << newDate << " " << newTime
-                             << " is unavailable.\n";
-                    }
-                    break;
+
+                    cout << "Successfully rescheduled booking to " << newDate << " " << newTime << " on Court " << court.id << ".\n";
+                    return;
+                }
+                else
+                {
+                    cout << "New time slot " << newDate << " " << newTime << " is unavailable.\n";
+                    return;
                 }
             }
         }
 
-        if (!foundCourt)
-        {
-            cout << "Court " << courtID << " not found.\n";
-        }
-        else if (!rescheduled)
-        {
-            cout << "No active booking found at " << oldDate << " " << oldTime
-                 << " on Court " << courtID << endl;
-        }
+        cout << "Court " << targetBooking->courtID << " not found.\n";
     }
+
 };
 
 #endif

@@ -1,1 +1,10 @@
-[]
+[
+    {
+        "bookingID": "B240",
+        "courtID": "Court1",
+        "date": "2025-05-17",
+        "location": "Pzone-tagamoa",
+        "memberID": "M337",
+        "time": "16:00"
+    }
+]

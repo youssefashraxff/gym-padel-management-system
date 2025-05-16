@@ -1,17 +1,10 @@
 [
     {
-        "id": "S004",
-        "name": "Ali Nasr",
-        "password": "123123123",
-        "role": "Coach",
-        "username": "staff_4"
-    },
-    {
-        "id": "S005",
-        "name": "Toqa Hossam",
-        "password": "pass567",
-        "role": "Manager",
-        "username": "staff_5"
+        "id": "S002",
+        "name": "Karim Fady",
+        "password": "pass234",
+        "role": "Receptionist",
+        "username": "staff_2"
     },
     {
         "id": "S003",
@@ -21,11 +14,11 @@
         "username": "staff_3"
     },
     {
-        "id": "S002",
-        "name": "Karim Fady",
-        "password": "pass234",
-        "role": "Receptionist",
-        "username": "staff_2"
+        "id": "S005",
+        "name": "Toqa Hossam",
+        "password": "pass567",
+        "role": "Manager",
+        "username": "staff_5"
     },
     {
         "id": "S001",
@@ -33,5 +26,12 @@
         "password": "123123123",
         "role": "Coach",
         "username": "staff_1"
+    },
+    {
+        "id": "S004",
+        "name": "Ali Nasr",
+        "password": "123123123",
+        "role": "Coach",
+        "username": "staff_4"
     }
 ]
