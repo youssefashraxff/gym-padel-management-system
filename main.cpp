@@ -103,7 +103,7 @@ int main()
                                 cin >> classID;
                                 Class *chosenClass = &dataManager.classesID[classID];
 
-                                if (chosenClass->addMember(loggedInMember.id))
+                                if (chosenClass->addMember(loggedInMember.id, loggedInMember.isVIP))
                                 {
                                     classManager.addWorkout(loggedInMember.id, chosenClass);
                                 }
@@ -123,7 +123,14 @@ int main()
                         cin >> classId_forCancel;
 
                         Class chosenClass = dataManager.getClassByID(classId_forCancel);
-                        notificationManager.notify_Latest_in_waitinglist(chosenClass.waitlist.front(), chosenClass);
+
+                        if (!chosenClass.vipWaitlist.empty()) {
+                            notificationManager.notify_Latest_in_waitinglist(chosenClass.vipWaitlist.front(), chosenClass);
+                        } 
+                        else if (!chosenClass.regularWaitlist.empty()) {
+                            notificationManager.notify_Latest_in_waitinglist(chosenClass.regularWaitlist.front(), chosenClass);
+                        }
+                    
                         chosenClass.removeMember(loggedInMember.id);
                         classManager.removeWorkout(loggedInMember.id, &chosenClass);
                         dataManager.classesID[chosenClass.id] = chosenClass;

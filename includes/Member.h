@@ -19,6 +19,7 @@ public:
     string id;
     int Age;
     int subscriptionId;
+    bool isVIP;
     static unordered_set<string> usedIds;
 private:  
     string generateRandomMemberID() {
@@ -42,8 +43,9 @@ public:
         const string& password,
         const string& name,
         const int& age,
-        const int& subscriptionId )
-     : username(username), password(password), name(name), Age(age),subscriptionId(subscriptionId) {
+        const int& subscriptionId,
+        const bool& isVIP = false)
+     : username(username), password(password), name(name), Age(age), subscriptionId(subscriptionId), isVIP(isVIP) {
         this->id = generateRandomMemberID();
      }
 
@@ -57,6 +59,7 @@ public:
         cout << "Username: " << username << "\n";
         cout << "Age: " << Age << "\n";
         cout << "Subscription ID: " << subscriptionId << "\n";
+        cout << "VIP Status: " << (isVIP ? "Yes" : "No") << "\n";
         cout << "----------------------------------\n";
     }
 };
