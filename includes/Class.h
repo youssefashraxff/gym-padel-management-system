@@ -20,35 +20,35 @@ public:
     string type;
     string id;
     string coachName;
-    string coachId;
     int capacity;
     time_t dayTime;
-    queue<string> waitlist;
+    queue<string> vipWaitlist;
+    queue<string> regularWaitlist;
     unordered_set<string> memberIDs;
+    unordered_map<string, bool> memberVIPStatus;
 
 public:
-    Class(string type, string id, string coachName, string coachId, int capacity, time_t dayTime)
-        : type(type), id(id), coachName(coachName), coachId(coachId), capacity(capacity), dayTime(dayTime) {}
-    Class() {}
-    bool addMember(string memberID)
+    void addMember(string memberID, bool isVIP = false)
     {
+        // Always store VIP status first
+        memberVIPStatus[memberID] = isVIP;
+        
         if (memberIDs.size() < capacity)
         {
-            if (memberIDs.find(memberID) != memberIDs.end())
-            {
-                cout << "Member " << memberID << " is already booked in this class.\n";
-                return false;
-            }
             memberIDs.insert(memberID);
+            memberVIPStatus[memberID] = isVIP;
             cout << "Booking confirmed for " << memberID << ".\n";
             cout << "\n\nMembers " << memberIDs.size() << "\n";
-            return true;
         }
         else
         {
-            waitlist.push(memberID);
+            
+            if (isVIP) {
+                vipWaitlist.push(memberID);
+            } else {
+                regularWaitlist.push(memberID);
+            }
             cout << "Class is full. " << memberID << " added to waitlist.\n";
-            return false;
         }
     }
     void removeMember(string memberID)
@@ -59,55 +59,54 @@ public:
             return;
         }
         memberIDs.erase(memberID);
-        addMember(waitlist.front());
-        waitlist.pop();
+        memberVIPStatus.erase(memberID);
+        
+       
+        if (!vipWaitlist.empty()) {
+            string nextMember = vipWaitlist.front();
+            vipWaitlist.pop();
+            memberIDs.insert(nextMember);
+            memberVIPStatus[nextMember] = true;
+            cout << "VIP Member " << nextMember << " moved from waitlist to class.\n";
+        } else if (!regularWaitlist.empty()) {
+            string nextMember = regularWaitlist.front();
+            regularWaitlist.pop();
+            memberIDs.insert(nextMember);
+            memberVIPStatus[nextMember] = false;
+            cout << "Member " << nextMember << " moved from waitlist to class.\n";
+        }
+        
         cout << "Booking cancelled for " << memberID << ".\n";
     }
     unordered_set<string> getMembers()
     {
         return memberIDs;
     }
-    void showClass(unordered_map<string, Member> membersID)
-    {
-        cout << "\nClass ID: " << id << "\n";
-        cout << "Class Type: " << type << "\n";
-        cout << "Coach Name: " << coachName << "\n";
-        cout << "Capacity: " << capacity << "\n";
-        cout << "Date & Time: " << time_t_to_string(dayTime) << "\n";
-        cout << "\nEnrolled Members: ";
-        if (memberIDs.empty())
-        {
-            cout << "None" << endl;
+    
+    
+    void showWaitlist() {
+        if (vipWaitlist.empty() && regularWaitlist.empty()) {
+            cout << "Waitlist is empty.\n";
+            return;
         }
-        else
-        {
-            for (const auto &it : memberIDs)
-            {
-                cout << "\nID: " << membersID[it].id << "\n";
-                cout << "Name" << membersID[it].name << "\n";
-                cout << "Username: " << membersID[it].username << "\n";
-            }
+        
+        cout << "\nWaitlist Status:\n";
+        int position = 1;
+        
+        // Show VIP members first
+        queue<string> tempVIP = vipWaitlist;
+        while (!tempVIP.empty()) {
+            string memberID = tempVIP.front();
+            cout << position++ << ". " << memberID << " (VIP: Yes)\n";
+            tempVIP.pop();
         }
-    }
-
-    void showWaitlist(unordered_map<string, Member> membersID)
-    {
-        cout << "\nWaitlist: ";
-        if (waitlist.empty())
-        {
-            cout << "None" << endl;
-        }
-        else
-        {
-            queue<string> copy = waitlist;
-            while (!copy.empty())
-            {
-                cout << "\nID: " << membersID[copy.front()].id << "\n";
-                cout << "Name: " << membersID[copy.front()].name << "\n";
-                cout << "Username: " << membersID[copy.front()].username << "\n";
-                copy.pop();
-            }
-            cout << endl;
+        
+        // Then show regular members
+        queue<string> tempRegular = regularWaitlist;
+        while (!tempRegular.empty()) {
+            string memberID = tempRegular.front();
+            cout << position++ << ". " << memberID << " (VIP: No)\n";
+            tempRegular.pop();
         }
     }
 };

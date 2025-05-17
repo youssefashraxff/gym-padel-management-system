@@ -5,15 +5,17 @@
         "name": "Toqa Hossam",
         "password": "123123123",
         "subscriptionId": -1,
-        "username": "toqa123"
+        "username": "toqa123",
+        "isVip": false
     },
     {
-        "age": 20,
+        "age": 21,
         "id": "M019",
         "name": "Ali Nasr",
         "password": "123123123",
         "subscriptionId": 247,
-        "username": "ali123"
+        "username": "ali123",
+        "isVip": false
     },
     {
         "age": 20,
@@ -21,7 +23,8 @@
         "name": "Nour Aziz",
         "password": "123123123",
         "subscriptionId": 172,
-        "username": "nour123"
+        "username": "nour123",
+        "isVip": true
     },
     {
         "age": 20,
@@ -29,7 +32,8 @@
         "name": "Youssef Ashraf",
         "password": "123123123",
         "subscriptionId": 107,
-        "username": "youssef123"
+        "username": "youssef123",
+        "isVip": true
     },
     {
         "age": 20,
@@ -37,6 +41,7 @@
         "name": "Karim Fady",
         "password": "123123123",
         "subscriptionId": -1,
-        "username": "Karim123"
+        "username": "Karim123",
+        "isVip": false
     }
 ]
